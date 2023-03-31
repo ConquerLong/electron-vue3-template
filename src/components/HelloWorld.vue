@@ -7,6 +7,7 @@ const count = ref(0)
 </script>
 
 <template>
+  <el-button type="success">点我好吗</el-button>
   <h1>{{ msg }}</h1>
 
   <div class="card">
