@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+function goBack(){
+  router.back()
+}
 
 defineProps<{ msg: string }>()
 
@@ -7,7 +13,7 @@ const count = ref(0)
 </script>
 
 <template>
-  <el-button type="success">点我好吗 </el-button>
+  <el-button type="success" @click="goBack">返回上一页</el-button>
   <el-icon size="25" color="red">
     <i-ep-edit />
   </el-icon>
