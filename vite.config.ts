@@ -7,6 +7,8 @@ import pkg from './package.json'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import path from 'path'
 
 export default defineConfig(({ command }) => {
@@ -63,12 +65,26 @@ export default defineConfig(({ command }) => {
       // Use Node.js API in the Renderer-process
       renderer(),
       AutoImport({
-        resolvers: [ElementPlusResolver()],
-        dts: path.resolve(__dirname, 'types/auto-imports.d.ts')
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动导入图标组件
+          IconsResolver({
+            prefix: 'Icon',
+          }),
+        ],
+        dts: path.resolve(__dirname, 'types/auto-imports.d.ts'),
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          // 自动注册图标组件
+          IconsResolver({
+            enabledCollections: ['ep'], // @iconify-json/ep 是 Element Plus 的图标库
+          }),
+          , ElementPlusResolver()],
         dts: path.resolve(__dirname, 'types/components.d.ts')
+      }),
+      Icons({
+        autoInstall: true,
       }),
     ],
     server: process.env.VSCODE_DEBUG && (() => {

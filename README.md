@@ -23,20 +23,6 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 # 使用cnpm安装依赖
 cnpm i
 ```
-
-# 必装插件
-
-- eslint    语法检测
-- prettier  代码格式化
-- volar [安装两个]
-  - 一个基础 vue 语法提示
-  - 一个 ts 版语法提示
-
-# 推荐插件
-+ Element Plus Snippets [大量element代码块]
-+ Vue VSCode Snippets   [大量vue代码块]
-
-
 # 工程目录结构
 
 ```diff
@@ -57,4 +43,41 @@ cnpm i
   ├── index.html
   ├── package.json
   └── vite.config.ts
+```
+
+# 必装插件
+
+- eslint    语法检测
+- prettier  代码格式化
+- volar [安装两个]
+  - 一个基础 vue 语法提示
+  - 一个 ts 版语法提示
+
+# 推荐插件
++ Element Plus Snippets [大量element代码块]
++ Vue VSCode Snippets   [大量vue代码块]
++ Markdown All in One   [预览md文件]
++ Markdown Preview GitHub Styling [github风格的md预览]
+
+# 常用操作
+## 速查手册
+
+[vite 官方文档](https://cn.vitejs.dev/guide/)  
+[vue3 官方文档](https://cn.vuejs.org/guide/components/props.html)  
+[element-plus](https://element-plus.org/zh-CN/component/button.html)  
+[vue-router](https://router.vuejs.org/zh/guide/)  
+[sass 官方文档](https://www.sass.hk/docs/)  
+[ts 菜鸟教程](https://www.runoob.com/typescript/ts-object.html)  
+[electron 官方文档](https://www.electronjs.org/zh/docs/latest/api/app)  
+[element-plus](https://element-plus.org/zh-CN/component/button.html)  
+[pinia 官方文档](https://pinia.web3doc.top/introduction.html)
+
+## 使用 element 的图标
+所有图标直接看官网：[https://element-plus.org/zh-CN/component/icon.html#%E5%9B%BE%E6%A0%87%E9%9B%86%E5%90%88](https://element-plus.org/zh-CN/component/icon.html#%E5%9B%BE%E6%A0%87%E9%9B%86%E5%90%88)  
+调整为 i-ep-xx 即可
+ 
+```html
+<el-icon size="25" color="red">
+  <i-ep-edit />
+</el-icon>
 ```

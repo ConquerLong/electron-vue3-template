@@ -7,7 +7,10 @@ const count = ref(0)
 </script>
 
 <template>
-  <el-button type="success">点我好吗</el-button>
+  <el-button type="success">点我好吗 </el-button>
+  <el-icon size="25" color="red">
+    <i-ep-edit />
+  </el-icon>
   <h1>{{ msg }}</h1>
 
   <div class="card">
@@ -20,9 +23,8 @@ const count = ref(0)
 
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
+    starter
   </p>
   <p>
     Install
