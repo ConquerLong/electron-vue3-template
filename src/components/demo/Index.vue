@@ -1,6 +1,6 @@
 <template>
   <h1>
-    这是demo页
+    这是demo页 当前计数为：{{ counterStore.counter }}
   </h1>
   <ul>
     <li><router-link to="/hello">链接跳转helloworld页</router-link></li>
@@ -10,7 +10,9 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useCounterStore } from '../../store/modules/counterStore'
 
+const counterStore = useCounterStore()
 const router = useRouter()
 
 // 点击事件跳转对应页面
