@@ -18,6 +18,18 @@ export const useCounterStore = defineStore('counterStore', {
       console.log("actions方法改变state的值");
       this.counter++
     },
+
+    /**模拟异步等待2秒后加100 */
+    async add100(): Promise<number> {
+      const result = <number>await new Promise((resove) => {
+        setTimeout(() => {
+          resove(100)
+        }, 2000)
+      })
+
+      this.counter += result
+      return this.counter
+    }
   },
 
   // Getter 完全等同于 Store 状态的 计算值

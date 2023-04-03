@@ -10,10 +10,14 @@ function goBack() {
   router.back()
 }
 
+async function add100() {
+  const result = await counterStore.add100()
+  console.log(result);
+}
 </script>
 
 <template>
-  <h1>当前的计数为：{{ counterStore.counter }}  双倍值为：{{ counterStore.doubleCounter }}</h1>
+  <h1>当前的计数为：{{ counterStore.counter }} 双倍值为：{{ counterStore.doubleCounter }}</h1>
   <ul>
     <li>
       <el-button type="success" @click="goBack">返回上一页</el-button>
@@ -29,11 +33,14 @@ function goBack() {
     <li>
       <el-button type="info" @click="counterStore.increment">increment</el-button>
     </li>
+    <li>
+      <el-button type="success" @click="add100">异步加100</el-button>
+    </li>
   </ul>
 </template>
 
 <style scoped>
-  ul {
-    list-style: none;
-  }
+ul {
+  list-style: none;
+}
 </style>
