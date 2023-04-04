@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCounterStore } from '../store/modules/counterStore'
+import Language from './Language.vue';
+import langMap from '../locales/LangMap'
 
 const counterStore = useCounterStore()
 
@@ -17,6 +18,7 @@ async function add100() {
 </script>
 
 <template>
+  <h1>{{ $t(langMap.app_title) }}</h1>
   <h1>当前的计数为：{{ counterStore.counter }} 双倍值为：{{ counterStore.doubleCounter }}</h1>
   <ul>
     <li>
@@ -35,6 +37,9 @@ async function add100() {
     </li>
     <li>
       <el-button type="success" @click="add100">异步加100</el-button>
+    </li>
+    <li>
+      <Language></Language>
     </li>
   </ul>
 </template>
