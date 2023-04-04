@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useCounterStore } from '../store/modules/counterStore'
-import Language from './Language.vue';
 import langMap from '../locales/LangMap'
 
 const counterStore = useCounterStore()
