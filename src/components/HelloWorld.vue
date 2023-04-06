@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import { useCounterStore } from '../store/modules/counterStore'
 import langMap from '../locales/LangMap'
+import { loginApi } from '../api/auth'
 
 const counterStore = useCounterStore()
 
@@ -13,6 +14,13 @@ function goBack() {
 async function add100() {
   const result = await counterStore.add100()
   console.log(result);
+}
+
+
+function login() {
+  loginApi({ username: 'lzp', password: '666' }).then(res => {
+    console.log(res);
+  });
 }
 </script>
 
@@ -39,6 +47,9 @@ async function add100() {
     </li>
     <li>
       <Language></Language>
+    </li>
+    <li>
+      <el-button type="primary" @click="login">登录请求</el-button>
     </li>
   </ul>
 </template>
