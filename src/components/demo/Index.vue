@@ -4,7 +4,7 @@
   </h1>
   <ul>
     <li><router-link to="/hello">链接跳转helloworld页</router-link></li>
-    <li><a @click="goTo('/hello')">点击事件跳转helloWorld页</a></li>
+    <li><router-link to="/demo/mockDemo">mockjs案例</router-link></li>
   </ul>
 </template>
 

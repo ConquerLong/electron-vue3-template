@@ -14,10 +14,12 @@ declare module '@vue/runtime-core' {
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    GoBack: typeof import('./../src/components/demo/GoBack.vue')['default']
     HelloWorld: typeof import('./../src/components/HelloWorld.vue')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
     Index: typeof import('./../src/components/demo/Index.vue')['default']
     Language: typeof import('./../src/components/Language.vue')['default']
+    MockDemo: typeof import('./../src/components/demo/MockDemo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

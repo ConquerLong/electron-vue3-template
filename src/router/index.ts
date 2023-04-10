@@ -10,9 +10,18 @@ const router = createRouter({
       component: () => import('../components/demo/Index.vue')
     },
     // 配置helloworld页的路径
-    { 
-      path: '/hello', 
-      component: () => import('../components/HelloWorld.vue') 
+    {
+      path: '/hello',
+      component: () => import('../components/HelloWorld.vue')
+    },
+    /** ================= 放置各种操作的demo ============== */
+    {
+      path: '/demo',
+      component: () => import('../components/demo/Index.vue')
+    },
+    {
+      path: '/demo/mockDemo',
+      component: () => import('../components/demo/MockDemo.vue')
     },
   ],
 })
