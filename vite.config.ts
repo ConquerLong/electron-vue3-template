@@ -10,6 +10,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import path from 'path'
+import mockServer from 'vite-plugin-mock-server'
 
 export default defineConfig(({ command }) => {
   rmSync('dist-electron', { recursive: true, force: true })
@@ -80,12 +81,22 @@ export default defineConfig(({ command }) => {
           IconsResolver({
             enabledCollections: ['ep'], // @iconify-json/ep 是 Element Plus 的图标库
           }),
-          , ElementPlusResolver()],
+          ElementPlusResolver()
+        ],
         dts: path.resolve(__dirname, 'types/components.d.ts')
       }),
       Icons({
         autoInstall: true,
       }),
+      // mock数据
+      mockServer({
+        logLevel: 'info',
+        urlPrefixes: ['/api/'],
+        mockRootDir: path.relative(__dirname, './src/api/mock'),
+        mockJsSuffix: '.mock.js',
+        mockTsSuffix: '.mock.ts',
+        noHandlerResponse404: true,
+      })
     ],
     server: process.env.VSCODE_DEBUG && (() => {
       const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)

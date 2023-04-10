@@ -21,3 +21,23 @@ export interface LoginResult {
    */
   accessToken?: string;
 }
+
+/**
+ * 用户信息 
+ */
+export interface UserInfo {
+  /**
+   * 用户名
+   */
+  nickName: string;
+
+  /**
+   * 用户id
+   */
+  userId: string;
+
+  /**
+   * 年龄
+   */
+  age: number;
+}

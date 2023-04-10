@@ -23,6 +23,10 @@ const router = createRouter({
       path: '/demo/mockDemo',
       component: () => import('../components/demo/MockDemo.vue')
     },
+    {
+      path: '/demo/mockApiDemo',
+      component: () => import('../components/demo/MockApiDemo.vue')
+    },
   ],
 })
 

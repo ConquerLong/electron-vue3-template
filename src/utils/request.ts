@@ -3,7 +3,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: 'https://www.fastmock.site/mock/da142e3dbc6e2fcd1fab5c3d0dd789bf/electron-vue3',
+  baseURL: '/api',
   timeout: 50000,
   headers: { 'Content-Type': 'application/json;charset=utf-8' }
 });

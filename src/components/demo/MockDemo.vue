@@ -46,6 +46,13 @@ const persons: [any] = Mock.mock({
   ]
 }).array;
 
+console.log(Mock.mock({
+  id: '@id', // 随机id
+  name: '@cname', // 随机中文名称
+  'age|18-35': 18, // 随机年龄 18-35
+  email: '@email' // 随机邮箱
+}));
+
 </script>
 
 <style scoped>

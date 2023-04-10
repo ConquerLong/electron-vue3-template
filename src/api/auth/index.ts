@@ -1,6 +1,6 @@
 import request from '../../utils/request';
 import { AxiosPromise } from 'axios';
-import { LoginData, LoginResult } from './types'
+import { LoginData, LoginResult, UserInfo } from './types'
 
 /**
  * 登录API
@@ -13,5 +13,21 @@ export function loginApi(data: LoginData): AxiosPromise<LoginResult> {
     url: '/auth/login',
     method: 'post',
     params: data
+  });
+}
+
+/**
+ * 获取用户信息
+ *
+ * @param data {UserInfo}
+ * @returns
+ */
+export function getUserInfoApi(accessToken: string): AxiosPromise<UserInfo> {
+  return request({
+    url: '/auth/userInfo',
+    method: 'get',
+    params: {
+      accessToken: accessToken
+    }
   });
 }
