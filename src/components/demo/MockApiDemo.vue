@@ -9,17 +9,18 @@
 
 <script setup lang="ts">
 import { loginApi, getUserInfoApi } from '../../api/auth'
+import myUtils from '../../utils/myUtils'
 // 登录
 function handleLogin() {
   loginApi({ username: 'xxx', password: 'xxx' }).then(res => {
-    console.log(`登录请求响应:=>${res.data.accessToken}`);
+    myUtils.message(`登录请求响应:=>${res.data.accessToken}`)
   })
 }
 
 // 登录
 function handleGetUserInfo() {
   getUserInfoApi("xxaxxx").then(res => {
-    console.log(`用户信息响应：=> userId:${res.data.userId}, nickName: ${res.data.nickName},age:${res.data.nickName}}`);
+    myUtils.message(`用户信息响应：=> userId:${res.data.userId}, nickName: ${res.data.nickName},age:${res.data.nickName}}`)
   })
 }
 
