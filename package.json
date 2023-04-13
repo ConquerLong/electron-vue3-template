@@ -19,7 +19,8 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
+    "pro": "vite --mode production",
     "build": "vue-tsc --noEmit && vite build && electron-builder"
   },
   "devDependencies": {

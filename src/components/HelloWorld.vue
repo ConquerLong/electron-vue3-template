@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useCounterStore } from '../store/modules/counterStore'
-import langMap from '../locales/LangMap'
-import { loginApi } from '../api/auth'
+import { useRouter } from "vue-router";
+import { useCounterStore } from "@store/counterStore";
+import langMap from "@/locales/LangMap";
+import { loginApi } from "@api/auth";
 
-const counterStore = useCounterStore()
+console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
+const counterStore = useCounterStore();
 
-const router = useRouter()
+const router = useRouter();
 function goBack() {
-  router.back()
+  router.back();
 }
 
 async function add100() {
-  const result = await counterStore.add100()
+  const result = await counterStore.add100();
   console.log(result);
 }
 
-
 function login() {
-  loginApi({ username: 'lzp', password: '666' }).then(res => {
+  loginApi({ username: "lzp", password: "666" }).then((res) => {
     console.log(res);
   });
 }
@@ -26,7 +26,11 @@ function login() {
 
 <template>
   <h1>{{ $t(langMap.app_title) }}</h1>
-  <h1>当前的计数为：{{ counterStore.counter }} 双倍值为：{{ counterStore.doubleCounter }}</h1>
+  <h1>
+    当前的计数为：{{ counterStore.counter }} 双倍值为：{{
+      counterStore.doubleCounter
+    }}
+  </h1>
   <ul>
     <li>
       <el-button type="success" @click="goBack">返回上一页</el-button>
@@ -37,10 +41,14 @@ function login() {
       </el-icon>
     </li>
     <li>
-      <el-button type="warning" @click="counterStore.counter++">直接操作state去改变值</el-button>
+      <el-button type="warning" @click="counterStore.counter++"
+        >直接操作state去改变值</el-button
+      >
     </li>
     <li>
-      <el-button type="info" @click="counterStore.increment">increment</el-button>
+      <el-button type="info" @click="counterStore.increment"
+        >increment</el-button
+      >
     </li>
     <li>
       <el-button type="success" @click="add100">异步加100</el-button>
