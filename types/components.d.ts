@@ -23,5 +23,6 @@ declare module '@vue/runtime-core' {
     MockDemo: typeof import('./../src/components/demo/MockDemo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SassDemo: typeof import('./../src/components/demo/sassDemo.vue')['default']
   }
 }

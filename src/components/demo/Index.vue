@@ -4,6 +4,7 @@
     <li><router-link to="/hello">链接跳转helloworld页</router-link></li>
     <li><router-link to="/demo/mockDemo">mockjs案例</router-link></li>
     <li><router-link to="/demo/mockApiDemo">前端模拟接口</router-link></li>
+    <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
   </ul>
 </template>
 
