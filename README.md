@@ -1,3 +1,20 @@
+# 说明
+
+本工程是在工作学习中对 electron+vue3 体系的学习与总结，所有使用案例均放在 [compoents/demo 目录](src\components\demo)下
+
+# 技术栈
+
+| 技术         | 描述                      | 学习地址                                                            |
+| ------------ | ------------------------- | ------------------------------------------------------------------- |
+| electron     | 写前端的方式开发桌面端    |                                                                     |
+| vite         | 新一代前端构建工具        | [官网](https://cn.vitejs.dev/guide/)                                |
+| vue3         | 渐进式前端框架            | [官网](https://cn.vuejs.org/guide/components/props.html)            |
+| typescript   | js 的超集，更好的代码提示 | [菜鸟教程](https://www.runoob.com/typescript/ts-object.html)        |
+| element-plus | 前端 ui 框架              | [文档地址](https://element-plus.gitee.io/zh-CN/component/icon.html) |
+| axios        | 请求发送                  | [官网](https://axios-http.com/zh/docs/intro)                        |
+| pinia        | 全局状态管理              | [官网](https://pinia.web3doc.top/introduction.html)                 |
+| mockjs       | 模拟数据                  | [官网](https://blog.csdn.net/qq_42365534/article/details/130059576) |
+
 # 开始
 
 1. 配置 npm 镜像
