@@ -11,6 +11,7 @@ import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import path from "path";
 import mockServer from "vite-plugin-mock-server";
+import UnpluginSvgComponent from "unplugin-svg-component/vite";
 
 export default defineConfig(({ command }) => {
   rmSync("dist-electron", { recursive: true, force: true });
@@ -29,6 +30,13 @@ export default defineConfig(({ command }) => {
       },
     },
     plugins: [
+      UnpluginSvgComponent({
+        iconDir: path.resolve(__dirname, "./src/assets/icons"),
+        projectType: "vue",
+        dts: true,
+        dtsDir: path.resolve(__dirname, "./types"),
+        vueVersion: 3,
+      }),
       vue(),
       electron([
         {

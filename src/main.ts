@@ -1,24 +1,26 @@
-import { createApp } from 'vue'
-import "./style.css"
-import 'element-plus/theme-chalk/el-message.css';
-import 'element-plus/theme-chalk/el-message-box.css';
-import 'element-plus/theme-chalk/el-loading.css';
-import App from './App.vue'
-import './samples/node-api'
-import router from './router'
-import pinia from './store'
-import i18n from './locales'
+import { createApp } from "vue";
+import "./style.css";
+import "element-plus/theme-chalk/el-message.css";
+import "element-plus/theme-chalk/el-message-box.css";
+import "element-plus/theme-chalk/el-loading.css";
+import App from "./App.vue";
+import "./samples/node-api";
+import router from "./router";
+import pinia from "./store";
+import i18n from "./locales";
+import SvgIcon from "~virtual/svg-component";
 
-const app = createApp(App)
+const app = createApp(App);
+// main.ts
+app.component(SvgIcon.name, SvgIcon);
 
 // 配置路由
-app.use(router)
+app.use(router);
 // 配置pinia
-app.use(pinia)
+app.use(pinia);
 // 配置国际化
-app.use(i18n)
+app.use(i18n);
 
-app.mount('#app')
-  .$nextTick(() => {
-    postMessage({ payload: 'removeLoading' }, '*')
-  })
+app.mount("#app").$nextTick(() => {
+  postMessage({ payload: "removeLoading" }, "*");
+});

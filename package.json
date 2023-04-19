@@ -33,6 +33,7 @@
     "typescript": "^5.0.2",
     "unplugin-auto-import": "^0.15.2",
     "unplugin-icons": "^0.16.1",
+    "unplugin-svg-component": "^0.6.0",
     "unplugin-vue-components": "^0.24.1",
     "vite": "^4.1.4",
     "vite-plugin-electron": "^0.11.1",

@@ -25,6 +25,10 @@ function login() {
 </script>
 
 <template>
+  <SvgIcon
+    name="renwen"
+    style="color: pink; width: 50px; height: 50px"
+  ></SvgIcon>
   <h1>{{ $t(langMap.app_title) }}</h1>
   <h1>
     当前的计数为：{{ counterStore.counter }} 双倍值为：{{
