@@ -11,7 +11,7 @@ import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import path from "path";
 import mockServer from "vite-plugin-mock-server";
-import UnpluginSvgComponent from "unplugin-svg-component/vite";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
 export default defineConfig(({ command }) => {
   rmSync("dist-electron", { recursive: true, force: true });
@@ -30,14 +30,20 @@ export default defineConfig(({ command }) => {
       },
     },
     plugins: [
-      UnpluginSvgComponent({
-        iconDir: path.resolve(__dirname, "./src/assets/icons"),
-        projectType: "vue",
-        dts: true,
-        dtsDir: path.resolve(__dirname, "./types"),
-        vueVersion: 3,
-      }),
       vue(),
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(__dirname, "src/assets/icons")],
+        symbolId: "icon-[dir]-[name]",
+        svgoOptions: {
+          // 移除icon图标携带的 fill
+          plugins: [
+            {
+              name: "removeAttrs",
+              params: { attrs: ["class", "data-name", "fill", "stroke"] },
+            },
+          ],
+        },
+      }),
       electron([
         {
           // Main-Process entry file of the Electron App.

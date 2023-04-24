@@ -8,11 +8,10 @@ import "./samples/node-api";
 import router from "./router";
 import pinia from "./store";
 import i18n from "./locales";
-import SvgIcon from "~virtual/svg-component";
+import "virtual:svg-icons-register";
 
 const app = createApp(App);
 // main.ts
-app.component(SvgIcon.name, SvgIcon);
 
 // 配置路由
 app.use(router);

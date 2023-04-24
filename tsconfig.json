@@ -17,7 +17,8 @@
       "@/*": ["./src/*"],
       "@store/*": ["./src/store/modules/*"],
       "@api/*": ["./src/api/*"]
-    }
+    },
+    "types": ["vite-plugin-svg-icons/client"]
   },
   "include": ["src", "types"],
   "references": [{ "path": "./tsconfig.node.json" }]
