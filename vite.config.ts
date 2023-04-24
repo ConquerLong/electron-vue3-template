@@ -35,12 +35,14 @@ export default defineConfig(({ command }) => {
         iconDirs: [path.resolve(__dirname, "src/assets/icons")],
         symbolId: "icon-[dir]-[name]",
         svgoOptions: {
-          // 移除icon图标携带的 fill
+          // 删除一些填充的属性
           plugins: [
             {
               name: "removeAttrs",
               params: { attrs: ["class", "data-name", "fill", "stroke"] },
             },
+            // 删除样式标签
+            "removeStyleElement",
           ],
         },
       }),
