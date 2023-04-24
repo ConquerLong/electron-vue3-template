@@ -1,4 +1,5 @@
 <template>
+  <h1>{{ $t(langMap.app_title) }}</h1>
   <h1>这是demo页 当前计数为：{{ counterStore.counter }}</h1>
   <ul>
     <li><router-link to="/hello">链接跳转helloworld页</router-link></li>
@@ -31,7 +32,7 @@ import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
 import { ref } from "vue";
 import electronUtils from "@/utils/electronUtils";
-
+import langMap from "@/locales/langMap";
 const counterStore = useCounterStore();
 const router = useRouter();
 

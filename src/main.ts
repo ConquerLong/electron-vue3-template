@@ -9,6 +9,7 @@ import router from "./router";
 import pinia from "./store";
 import i18n from "./locales";
 import "virtual:svg-icons-register";
+import { initLangListener } from "@/locales";
 
 const app = createApp(App);
 // main.ts
@@ -22,4 +23,6 @@ app.use(i18n);
 
 app.mount("#app").$nextTick(() => {
   postMessage({ payload: "removeLoading" }, "*");
+  // 初始化多语言切换监听
+  initLangListener();
 });

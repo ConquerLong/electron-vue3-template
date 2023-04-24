@@ -143,3 +143,15 @@ ipcMain.handle("show-process", (event, show: boolean) => {
     }
   }
 });
+
+/**语言修改同步 */
+ipcMain.handle("lang:change", (event, lang) => {
+  // 通知所有窗口同步更改语言
+  for (const currentWin of BrowserWindow.getAllWindows()) {
+    const webContentsId = currentWin.webContents.id;
+    // 这里排除掉发送通知的窗口
+    if (webContentsId !== event.sender.id) {
+      currentWin.webContents.send("lang:change", lang);
+    }
+  }
+});

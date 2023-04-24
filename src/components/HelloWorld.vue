@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
-import langMap from "@/locales/LangMap";
+import langMap from "@/locales/langMap";
 import { loginApi } from "@api/auth";
 import { ref } from "vue";
 import electronUtils from "@/utils/electronUtils";
