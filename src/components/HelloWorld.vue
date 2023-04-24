@@ -3,6 +3,8 @@ import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
 import langMap from "@/locales/LangMap";
 import { loginApi } from "@api/auth";
+import { ref } from "vue";
+import electronUtils from "@/utils/electronUtils";
 
 console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
 const counterStore = useCounterStore();
@@ -22,10 +24,23 @@ function login() {
     console.log(res);
   });
 }
+
+const showProcess = ref(false);
+
+/**切换process 显示/隐藏 */
+function switchProcess() {
+  showProcess.value = !showProcess.value;
+  electronUtils.showProcess(showProcess.value);
+}
 </script>
 
 <template>
-  <SvgIcon name="renwen" class="myIcon" :size="60"></SvgIcon>
+  <SvgIcon
+    name="renwen"
+    class="myIcon"
+    :size="60"
+    style="color: pink"
+  ></SvgIcon>
   <h1>{{ $t(langMap.app_title) }}</h1>
   <h1>
     当前的计数为：{{ counterStore.counter }} 双倍值为：{{
@@ -60,17 +75,16 @@ function login() {
     <li>
       <el-button type="primary" @click="login">登录请求</el-button>
     </li>
+    <li>
+      <el-button type="warning" @click="switchProcess">{{
+        showProcess ? "关闭process" : "显示process"
+      }}</el-button>
+    </li>
   </ul>
 </template>
 
 <style scoped>
 ul {
   list-style: none;
-}
-.myIcon {
-  color: blue;
-  width: 100px;
-  height: 100px;
-  /* font-size: 15px; */
 }
 </style>

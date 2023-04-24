@@ -5,7 +5,7 @@ import { ipcRenderer } from "electron";
  * @param path 路由地址
  */
 export function openWindow(path: string) {
-  ipcRenderer.invoke("open-win");
+  ipcRenderer.invoke("open-win", path);
 }
 
 /**
@@ -13,7 +13,7 @@ export function openWindow(path: string) {
  * @param isShow 是否显示加载进度条【底部工具栏图标显示】
  */
 export function showProcess(isShow: boolean) {
-  ipcRenderer.invoke("show-prosess", isShow);
+  ipcRenderer.invoke("show-process", isShow);
 }
 
 export default {

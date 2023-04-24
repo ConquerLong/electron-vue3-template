@@ -5,19 +5,43 @@
     <li><router-link to="/demo/mockDemo">mockjs案例</router-link></li>
     <li><router-link to="/demo/mockApiDemo">前端模拟接口</router-link></li>
     <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
+    <li>
+      <el-select
+        v-model="windowPath"
+        value-key=""
+        placeholder="输入路由地址"
+        clearable
+        filterable
+      >
+        <el-option
+          v-for="path in routerPaths"
+          :key="path"
+          :label="path"
+          :value="path"
+        >
+        </el-option>
+      </el-select>
+      <el-button @click="openWindow">新建窗口</el-button>
+    </li>
   </ul>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
+import { ref } from "vue";
+import electronUtils from "@/utils/electronUtils";
 
 const counterStore = useCounterStore();
 const router = useRouter();
 
-// 点击事件跳转对应页面
-function goTo(path: string) {
-  router.push(path);
+const windowPath = ref("/hello");
+const routerPaths = ref<string[]>([]);
+// 取到所有的路径
+routerPaths.value = router.getRoutes().map((item) => item.path);
+
+function openWindow() {
+  electronUtils.openWindow(windowPath.value);
 }
 </script>
 
