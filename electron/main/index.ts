@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from "electron";
+import { app, BrowserWindow, shell, ipcMain, nativeTheme } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
 
@@ -155,3 +155,21 @@ ipcMain.handle("lang:change", (event, lang) => {
     }
   }
 });
+
+// 主题样式修改同步
+ipcMain.handle(
+  "theme-style:change",
+  (event, mode?: "system" | "light" | "dark") => {
+    if (mode && "system,light,dark".indexOf(mode) >= 0) {
+      nativeTheme.themeSource = mode;
+    }
+    // 通知所有窗口同步更改样式
+    // 遍历window执行
+    for (const currentWin of BrowserWindow.getAllWindows()) {
+      const webContentsId = currentWin.webContents.id;
+      if (webContentsId !== event.sender.id) {
+        currentWin.webContents.send("theme-style:changed", mode);
+      }
+    }
+  }
+);

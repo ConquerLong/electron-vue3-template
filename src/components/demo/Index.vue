@@ -6,6 +6,7 @@
     <li><router-link to="/demo/mockDemo">mockjs案例</router-link></li>
     <li><router-link to="/demo/mockApiDemo">前端模拟接口</router-link></li>
     <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
+    <li><router-link to="/demo/themeDemo">themeDemo</router-link></li>
     <li>
       <el-select
         v-model="windowPath"
@@ -46,7 +47,10 @@ function openWindow() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+h1 {
+  color: $primaryColor;
+}
 ul {
   list-style: none;
 }

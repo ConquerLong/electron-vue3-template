@@ -31,6 +31,10 @@ const router = createRouter({
       path: "/demo/sassDemo",
       component: () => import("@/components/demo/sassDemo.vue"),
     },
+    {
+      path: "/demo/ThemeDemo",
+      component: () => import("@/components/demo/ThemeDemo.vue"),
+    },
   ],
 });
 

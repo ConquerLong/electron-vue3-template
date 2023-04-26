@@ -10,6 +10,7 @@ import pinia from "./store";
 import i18n from "./locales";
 import "virtual:svg-icons-register";
 import { initLangListener } from "@/locales";
+import { initTheme } from "@/utils/themeUtils";
 
 const app = createApp(App);
 // main.ts
@@ -25,4 +26,6 @@ app.mount("#app").$nextTick(() => {
   postMessage({ payload: "removeLoading" }, "*");
   // 初始化多语言切换监听
   initLangListener();
+  // 主题色初始化
+  initTheme();
 });

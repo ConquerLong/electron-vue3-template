@@ -97,7 +97,9 @@ export default defineConfig(({ command }) => {
       renderer(),
       AutoImport({
         resolvers: [
-          ElementPlusResolver(),
+          ElementPlusResolver({
+            importStyle: "sass",
+          }),
           // 自动导入图标组件
           IconsResolver({
             prefix: "Icon",
@@ -111,7 +113,9 @@ export default defineConfig(({ command }) => {
           IconsResolver({
             enabledCollections: ["ep"], // @iconify-json/ep 是 Element Plus 的图标库
           }),
-          ElementPlusResolver(),
+          ElementPlusResolver({
+            importStyle: "sass",
+          }),
         ],
         dts: path.resolve(__dirname, "types/components.d.ts"),
       }),
@@ -128,6 +132,13 @@ export default defineConfig(({ command }) => {
         noHandlerResponse404: true,
       }),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use '@/styles/variables.scss' as *;`, // 引入全局变量文件
+        },
+      },
+    },
     server:
       process.env.VSCODE_DEBUG &&
       (() => {
