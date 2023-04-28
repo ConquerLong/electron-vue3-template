@@ -1,5 +1,9 @@
-import { createPinia } from 'pinia'
+import { createPinia } from "pinia";
+import { shareStorePlugin } from "./plugins/shareStorePlugin";
 
-const pinia = createPinia()
+const pinia = createPinia();
 
-export default pinia
+// 添加状态共享插件
+pinia.use(shareStorePlugin);
+
+export default pinia;
