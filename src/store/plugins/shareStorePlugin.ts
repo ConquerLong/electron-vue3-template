@@ -59,8 +59,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
       ipcRenderer.invoke(
         "pinia-store-change",
         storeName,
-        Object.keys(store.$state),
-        Object.values(store.$state)
+        JSON.stringify(store.$state)
       );
     } else {
       // 如果版本一致，则增加版本号，且更新本地存储版本 ，并且通知主线程告知其他窗口同步更新store状态
@@ -76,7 +75,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
         // 通知主线程更新
         ipcRenderer.invoke(
           "pinia-store-change",
-          store.$id,
+          storeName,
           JSON.stringify(store.$state)
         );
       } else {
