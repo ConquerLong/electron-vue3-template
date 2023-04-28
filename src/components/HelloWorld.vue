@@ -16,7 +16,7 @@ function goBack() {
 
 async function add100() {
   const result = await counterStore.add100();
-  console.log(result);
+  console.log(counterStore.messages);
 }
 
 function login() {

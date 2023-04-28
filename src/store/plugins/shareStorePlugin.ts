@@ -77,8 +77,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
         ipcRenderer.invoke(
           "pinia-store-change",
           store.$id,
-          Object.keys(store.$state),
-          Object.values(store.$state)
+          JSON.stringify(store.$state)
         );
       } else {
         // 如果当前store的版本大于本地存储的版本，说明本地版本重置了【过期重新创建】，此时重置store的版本
@@ -91,10 +90,14 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
   // 监听数据同步修改
   ipcRenderer.on(
     "pinia-store-set",
-    (event, targetStoreName: string, keys: string[], values: any[]) => {
+    (event, targetStoreName: string, jsonStr: string) => {
       // 监听到状态改变后，同步更新状态
       if (storeName === targetStoreName) {
         console.log("被动更新状态:" + storeName);
+
+        const obj = JSON.parse(jsonStr);
+        const keys = Object.keys(obj);
+        const values = Object.values(obj);
 
         /// 更新各个key对应的值的状态
         for (let i = 0; i < keys.length; i++) {
