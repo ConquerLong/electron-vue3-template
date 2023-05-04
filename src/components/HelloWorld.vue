@@ -3,8 +3,17 @@ import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
 import langMap from "@/locales/langMap";
 import { loginApi } from "@api/auth";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import electronUtils from "@/utils/electronUtils";
+import myUtils from "@/utils/myUtils";
+import { ElMessage } from "element-plus";
+
+onMounted(() => {
+  const paramData = myUtils.getParamFromUrl();
+  if (paramData) {
+    ElMessage.success(paramData.message);
+  }
+});
 
 console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
 const counterStore = useCounterStore();

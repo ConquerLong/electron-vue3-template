@@ -100,8 +100,11 @@ app.on("activate", () => {
   }
 });
 
-// New window example arg: new windows url
-ipcMain.handle("open-win", (_, arg) => {
+/**
+ * 新建一个窗口
+ * route=>路由地址  paramJsonStr => 序列化后的参数对象
+ */
+ipcMain.handle("open-win", (_, route: string, paramJsonStr: string) => {
   const childWindow = new BrowserWindow({
     webPreferences: {
       preload,
@@ -109,11 +112,11 @@ ipcMain.handle("open-win", (_, arg) => {
       contextIsolation: false,
     },
   });
-
+  const paramData = paramJsonStr ? "?urlParamData=" + paramJsonStr : "";
   if (process.env.VITE_DEV_SERVER_URL) {
-    childWindow.loadURL(`${url}#${arg}`);
+    childWindow.loadURL(`${url}#${route}${paramData}`);
   } else {
-    childWindow.loadFile(indexHtml, { hash: arg });
+    childWindow.loadFile(indexHtml, { hash: route + paramData });
   }
 });
 

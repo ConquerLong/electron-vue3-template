@@ -43,7 +43,9 @@ const routerPaths = ref<string[]>([]);
 routerPaths.value = router.getRoutes().map((item) => item.path);
 
 function openWindow() {
-  electronUtils.openWindow(windowPath.value);
+  electronUtils.openWindow(windowPath.value, {
+    message: "向你问个好~~",
+  });
 }
 </script>
 

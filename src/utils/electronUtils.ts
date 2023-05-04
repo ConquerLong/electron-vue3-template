@@ -3,9 +3,14 @@ import { ipcRenderer } from "electron";
 /**
  * 新建一个窗口
  * @param path 路由地址
+ * @param param 传递的参数
  */
-export function openWindow(path: string) {
-  ipcRenderer.invoke("open-win", path);
+export function openWindow(path: string, param?: Object) {
+  let paramJsonStr = undefined;
+  if (param) {
+    paramJsonStr = JSON.stringify(param);
+  }
+  ipcRenderer.invoke("open-win", path, paramJsonStr);
 }
 
 /**
