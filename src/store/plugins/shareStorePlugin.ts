@@ -51,7 +51,8 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
       currentStoreUpdateVersion === null ||
       currentStoreUpdateVersion === undefined
     ) {
-      currentStoreUpdateVersion = 0;
+      // 2023/5/12 调整重置值为 1 ，解决为null，重置值为0，其他窗口被动更新触发状态修改监听，结果缓存值和store的版本值都为0，导致主动更新，旧值覆盖新值的情况
+      currentStoreUpdateVersion = 1;
       store.storeUpdateVersion = currentStoreUpdateVersion;
       console.log(`主动更新 ${storeName} 的状态`);
 
