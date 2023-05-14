@@ -34,6 +34,7 @@ import { useCounterStore } from "@store/counterStore";
 import { ref } from "vue";
 import electronUtils from "@/utils/electronUtils";
 import langMap from "@/locales/langMap";
+import myUtils from "@/utils/myUtils";
 const counterStore = useCounterStore();
 const router = useRouter();
 
@@ -47,6 +48,23 @@ function openWindow() {
     message: "向你问个好~~",
   });
 }
+
+let lzp = {
+  name: "lzp",
+  likes: {
+    sports: new Map<string, string>([
+      ["k1", "v1"],
+      ["k2", "v2"],
+    ]),
+  },
+  game: new Map<string, string>([
+    ["kk1", "vv1"],
+    ["kk2", "vv2"],
+  ]),
+};
+
+console.log("自定义工具类进行序列化");
+console.log(myUtils.stringify(lzp));
 </script>
 
 <style scoped lang="scss">
