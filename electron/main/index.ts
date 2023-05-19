@@ -52,12 +52,6 @@ function handleUrl(url: string) {
     win?.webContents.send("launch-app", schemeRoomId);
   }
 }
-// 注册协议，用于浏览器打开应用
-registerScheme();
-// macOS 下通过协议URL启动时，主实例会通过 open-url 事件接收这个 URL
-app.on("open-url", (event, urlStr) => {
-  handleUrl(urlStr);
-});
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -105,7 +99,8 @@ async function createWindow() {
   });
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 }
-
+// 注册协议，用于浏览器打开应用
+registerScheme();
 app.whenReady().then(createWindow);
 
 app.on("window-all-closed", () => {
@@ -128,6 +123,11 @@ app.on("activate", () => {
   } else {
     createWindow();
   }
+});
+
+// macOS 下通过协议URL启动时，主实例会通过 open-url 事件接收这个 URL
+app.on("open-url", (event, urlStr) => {
+  handleUrl(urlStr);
 });
 
 /**
