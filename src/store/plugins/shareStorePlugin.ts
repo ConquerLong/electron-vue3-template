@@ -3,7 +3,7 @@ import cacheUtils from "@/utils/cacheUtils";
 import { PiniaPluginContext } from "pinia";
 
 // 预设本地store版本缓存时间为50s  实际开发中可以设置很大，缓存时间的限制，目的是为了让版本归零，避免自增超过上限
-const STORE_CACHE_TIME = 2;
+const STORE_CACHE_TIME = 50;
 // 设置本地store缓存的key
 const STORE_CACHE_KEY_PREFIX = "store_";
 const STORE_CACHE_VERSION_KEY_PREFIX = STORE_CACHE_KEY_PREFIX + "version_";
