@@ -1,12 +1,19 @@
 import { defineStore } from "pinia";
 
+interface ICounterStore {
+  counter: number;
+  messages: Array<string>;
+  map: Map<string, string>;
+}
+
 // 定义一个Store，名称要保证全局唯一
 export const useCounterStore = defineStore("counterStore", {
   // 全局的状态
-  state: () => {
+  state: (): ICounterStore => {
     return {
       counter: 0,
-      messages: [""],
+      messages: new Array<string>(),
+      map: new Map<string, string>(),
     };
   },
 

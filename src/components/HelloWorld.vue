@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
 import langMap from "@/locales/langMap";
 import { loginApi } from "@api/auth";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import electronUtils from "@/utils/electronUtils";
 import myUtils from "@/utils/myUtils";
 import { ElMessage } from "element-plus";
@@ -41,6 +41,19 @@ function switchProcess() {
   showProcess.value = !showProcess.value;
   electronUtils.showProcess(showProcess.value);
 }
+interface IUserInfo {
+  name: string;
+  age: number;
+  likes: Array<string>;
+}
+
+const userInfo = reactive<IUserInfo>({
+  name: "",
+  age: 18,
+  likes: [],
+});
+
+userInfo.likes.push("game");
 </script>
 
 <template>
