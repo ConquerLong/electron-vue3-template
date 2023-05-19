@@ -210,7 +210,7 @@ ipcMain.handle(
 /**pinia多窗口共享 */
 ipcMain.handle(
   "pinia-store-change",
-  (event, storeName: string, jsonStr: string, isReset: boolean) => {
+  (event, storeName: string, jsonStr: string, isResetVersion: boolean) => {
     // 遍历window执行
     for (const currentWin of BrowserWindow.getAllWindows()) {
       const webContentsId = currentWin.webContents.id;
@@ -219,7 +219,7 @@ ipcMain.handle(
           "pinia-store-set",
           storeName,
           jsonStr,
-          isReset
+          isResetVersion
         );
       }
     }

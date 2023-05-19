@@ -46,7 +46,6 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
 
   // 监听数据变化
   store.$subscribe(() => {
-    console.log("触发", store.storeUpdateVersion, isResetVersion);
     // 获取本地存储的最新状态
     currentStoreUpdateVersion = cacheUtils.get(storeCacheVersionKey);
     /// 如果本地缓存过期，则重置一个缓存，并且通知主进程让其他窗口更新状态
@@ -107,11 +106,9 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
         const values = Object.values(obj);
 
         /// 更新各个key对应的值的状态
-        store.$patch((state: any) => {
-          for (let i = 0; i < keys.length; i++) {
-            store.$state[keys[i]] = values[i];
-          }
-        });
+        for (let i = 0; i < keys.length; i++) {
+          store.$state[keys[i]] = values[i];
+        }
       }
     }
   );
