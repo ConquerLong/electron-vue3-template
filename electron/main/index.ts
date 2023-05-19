@@ -2,16 +2,6 @@ import { app, BrowserWindow, shell, ipcMain, nativeTheme } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
 
-// The built directory structure
-//
-// ├─┬ dist-electron
-// │ ├─┬ main
-// │ │ └── index.js    > Electron-Main
-// │ └─┬ preload
-// │   └── index.js    > Preload-Scripts
-// ├─┬ dist
-// │ └── index.html    > Electron-Renderer
-//
 process.env.DIST_ELECTRON = join(__dirname, "..");
 process.env.DIST = join(process.env.DIST_ELECTRON, "../dist");
 process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
@@ -28,6 +18,46 @@ if (!app.requestSingleInstanceLock()) {
   app.quit();
   process.exit(0);
 }
+
+// 注册协议
+const PROTOCOL = "lzpelectrondemo";
+/**添加注册表信息 用于浏览器启动客户端 */
+function registerScheme() {
+  const args = [];
+  if (!app.isPackaged) {
+    // 如果是开发阶段，需要把我们的脚本的绝对路径加入参数中
+    args.push(join(process.argv[1]));
+  }
+  // 加一个 `--` 以确保后面的参数不被 Electron 处理
+  args.push("--");
+  app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, args);
+  handleArgv(process.argv);
+}
+// 处理浏览器打开应用的启动参数信息
+function handleArgv(argv: string[]) {
+  const prefix = `${PROTOCOL}:`;
+  // 开发阶段，跳过前两个参数（`electron.exe .`）
+  // 打包后，跳过第一个参数（`myapp.exe`）
+  const offset = app.isPackaged ? 1 : 2;
+  const url = argv.find((arg, i) => i >= offset && arg.startsWith(prefix));
+  if (url) handleUrl(url);
+}
+// 处理url请求
+function handleUrl(url: string) {
+  // tuiroom://joinroom?roomId=123
+  const urlObj = new URL(url);
+  const { searchParams } = urlObj;
+  const schemeRoomId = searchParams.get("roomId") || "";
+  if (win && win.webContents) {
+    win?.webContents.send("launch-app", schemeRoomId);
+  }
+}
+// 注册协议，用于浏览器打开应用
+registerScheme();
+// macOS 下通过协议URL启动时，主实例会通过 open-url 事件接收这个 URL
+app.on("open-url", (event, urlStr) => {
+  handleUrl(urlStr);
+});
 
 // Remove electron security warnings
 // This warning only shows in development mode
