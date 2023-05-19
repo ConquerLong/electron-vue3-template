@@ -3,10 +3,12 @@ import cacheUtils from "@/utils/cacheUtils";
 import { PiniaPluginContext } from "pinia";
 
 // 预设本地store版本缓存时间为50s  实际开发中可以设置很大，缓存时间的限制，目的是为了让版本归零，避免自增超过上限
-const STORE_CACHE_TIME = 50;
+const STORE_CACHE_TIME = 2;
 // 设置本地store缓存的key
 const STORE_CACHE_KEY_PREFIX = "store_";
 const STORE_CACHE_VERSION_KEY_PREFIX = STORE_CACHE_KEY_PREFIX + "version_";
+// 2023/5/19 补充版本号重置的判断，解决版本号重置后，多个窗口 都与缓存版本一致，同时触发ipc调用，导致死循环的BUG
+let isResetVersion = false;
 
 declare module "pinia" {
   export interface PiniaCustomProperties {
@@ -44,6 +46,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
 
   // 监听数据变化
   store.$subscribe(() => {
+    console.log("触发", store.storeUpdateVersion, isResetVersion);
     // 获取本地存储的最新状态
     currentStoreUpdateVersion = cacheUtils.get(storeCacheVersionKey);
     /// 如果本地缓存过期，则重置一个缓存，并且通知主进程让其他窗口更新状态
@@ -51,8 +54,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
       currentStoreUpdateVersion === null ||
       currentStoreUpdateVersion === undefined
     ) {
-      // 2023/5/12 调整重置值为 1 ，解决为null，重置值为0，其他窗口被动更新触发状态修改监听，结果缓存值和store的版本值都为0，导致主动更新，旧值覆盖新值的情况
-      currentStoreUpdateVersion = 1;
+      currentStoreUpdateVersion = 0;
       store.storeUpdateVersion = currentStoreUpdateVersion;
       console.log(`主动更新 ${storeName} 的状态`);
 
@@ -60,20 +62,28 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
       updateStoreSync(
         JSON.stringify(store.$state),
         storeName,
-        store.storeUpdateVersion
+        store.storeUpdateVersion,
+        true
       );
     } else {
       // 如果版本一致，则增加版本号，且更新本地存储版本 ，并且通知主线程告知其他窗口同步更新store状态
       if (store.storeUpdateVersion === currentStoreUpdateVersion) {
-        store.storeUpdateVersion++;
-        console.log(`主动更新 ${storeName} 的状态`);
+        /// 补充版本号重置的判断，解决版本号重置后，多个窗口 都与缓存版本一致，同时触发ipc调用，导致死循环的BUG
+        if (isResetVersion) {
+          store.storeUpdateVersion = currentStoreUpdateVersion;
+          isResetVersion = false;
+        } else {
+          store.storeUpdateVersion++;
+          console.log(`主动更新 ${storeName} 的状态`);
 
-        // 主动更新
-        updateStoreSync(
-          JSON.stringify(store.$state),
-          storeName,
-          store.storeUpdateVersion
-        );
+          // 主动更新
+          updateStoreSync(
+            JSON.stringify(store.$state),
+            storeName,
+            store.storeUpdateVersion,
+            false
+          );
+        }
       } else {
         // 如果当前store的版本大于本地存储的版本，说明本地版本重置了【过期重新创建】，此时重置store的版本
         // 如果当前store的版本小于本地存储的版本，说明是被动更新引起的state变动回调，此时仅更新版本即可
@@ -85,9 +95,11 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
   // 监听数据同步修改
   ipcRenderer.on(
     "pinia-store-set",
-    (event, targetStoreName: string, jsonStr: string) => {
+    (event, targetStoreName: string, jsonStr: string, isReset: boolean) => {
       // 监听到状态改变后，同步更新状态
       if (storeName === targetStoreName) {
+        // 补充版本号是否重置标识
+        isResetVersion = isReset;
         console.log("被动更新状态:" + storeName);
 
         const obj = JSON.parse(jsonStr);
@@ -95,9 +107,11 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
         const values = Object.values(obj);
 
         /// 更新各个key对应的值的状态
-        for (let i = 0; i < keys.length; i++) {
-          store.$state[keys[i]] = values[i];
-        }
+        store.$patch((state: any) => {
+          for (let i = 0; i < keys.length; i++) {
+            store.$state[keys[i]] = values[i];
+          }
+        });
       }
     }
   );
@@ -108,18 +122,25 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
  * @param stateJsonStr 序列化的状态修改字符串
  * @param storeName  修改的状态的名称
  * @param storeUpdateVersion  状态修改的版本号
+ * @param isResetVersion 是否重置了版本号
  */
 function updateStoreSync(
   stateJsonStr: string,
   storeName: string,
-  storeUpdateVersion: number
+  storeUpdateVersion: number,
+  isResetVersion: boolean
 ) {
   // 更新本地缓存的store版本号
   const storeCacheVersionKey = STORE_CACHE_VERSION_KEY_PREFIX + storeName;
   cacheUtils.set(storeCacheVersionKey, storeUpdateVersion, STORE_CACHE_TIME);
 
   // 通知主线程更新
-  ipcRenderer.invoke("pinia-store-change", storeName, stateJsonStr);
+  ipcRenderer.invoke(
+    "pinia-store-change",
+    storeName,
+    stateJsonStr,
+    isResetVersion
+  );
 
   // 更新本地缓存的store
   cacheUtils.set(STORE_CACHE_KEY_PREFIX + storeName, stateJsonStr);
