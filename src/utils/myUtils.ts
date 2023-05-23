@@ -1,4 +1,5 @@
 import { ElLoading, ElMessage } from "element-plus";
+import { networkInterfaces } from "os";
 const urlParamKey = "urlParamData=";
 /**
  * 返回url传输的对象
@@ -70,9 +71,32 @@ export function cloneToObject(obj: any): any {
   return newObj;
 }
 
+/**获取mac地址信息 */
+export const getMacAddress = function (): string {
+  const interfaces = networkInterfaces();
+  let macAddress = "";
+  for (const interfaceName of Object.keys(interfaces)) {
+    const interfaceInfos = interfaces[interfaceName];
+
+    if (interfaceInfos) {
+      for (const interfaceInfo of interfaceInfos) {
+        if (interfaceInfo.mac && interfaceInfo.mac !== "00:00:00:00:00:00") {
+          macAddress = interfaceInfo.mac;
+          break;
+        }
+      }
+    }
+
+    if (macAddress.length > 0) break;
+  }
+
+  return macAddress;
+};
+
 export default {
   getParamFromUrl,
   stringify,
   cloneToObject,
   message,
+  getMacAddress,
 };

@@ -35,8 +35,11 @@ import { ref } from "vue";
 import electronUtils from "@/utils/electronUtils";
 import langMap from "@/locales/langMap";
 import myUtils from "@/utils/myUtils";
+
 const counterStore = useCounterStore();
 const router = useRouter();
+
+console.log("mac地址为：", myUtils.getMacAddress());
 
 const windowPath = ref("/hello");
 const routerPaths = ref<string[]>([]);
