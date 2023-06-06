@@ -26,6 +26,7 @@
   "devDependencies": {
     "@iconify-json/ep": "^1.1.10",
     "@types/mockjs": "^1.0.7",
+    "@types/qrcode": "^1.5.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "electron": "^23.1.1",
     "electron-builder": "^23.6.0",
@@ -48,6 +49,7 @@
     "element-plus": "^2.3.1",
     "mockjs": "^1.1.0",
     "pinia": "^2.0.33",
+    "qrcode": "^1.5.3",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6"
   }

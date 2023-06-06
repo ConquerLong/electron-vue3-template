@@ -14,6 +14,19 @@ export const getParamFromUrl = function (): any {
 };
 
 /**
+ * 从传入的url 中获取指定key的value
+ * @param {*} key 要获取的 key
+ * @returns window.location.href 中指定key对应的value
+ */
+export function getUrlParam(url: string, key: string) {
+  url = url.replace(/^[^?]*\?/, "");
+  const regexp = new RegExp(`(^|&)${key}=([^&#]*)(&|$|)`, "i");
+  const paramMatch = url.match(regexp);
+
+  return paramMatch ? paramMatch[2] : null;
+}
+
+/**
  * 提示消息简单封装
  * @param text 消息文本
  * @param type 消息类型
@@ -99,4 +112,5 @@ export default {
   cloneToObject,
   message,
   getMacAddress,
+  getUrlParam,
 };

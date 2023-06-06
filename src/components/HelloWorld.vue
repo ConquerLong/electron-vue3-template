@@ -102,6 +102,8 @@ userInfo.likes.push("game");
         showProcess ? "关闭process" : "显示process"
       }}</el-button>
     </li>
+    <!-- 微信登录
+    <wei-xin-login></wei-xin-login> -->
   </ul>
 </template>
 

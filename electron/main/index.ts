@@ -69,6 +69,7 @@ async function createWindow() {
     title: "Main window",
     icon: join(process.env.PUBLIC, "favicon.ico"),
     webPreferences: {
+      webviewTag: true,
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
       // Consider using contextBridge.exposeInMainWorld

@@ -29,5 +29,9 @@ declare module '@vue/runtime-core' {
     SvgIcon: typeof import('./../src/components/SvgIcon.vue')['default']
     ThemeDemo: typeof import('./../src/components/demo/ThemeDemo.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch.vue')['default']
+    WeiXinLogin: typeof import('./../src/components/demo/WeiXinLogin.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
