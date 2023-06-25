@@ -226,3 +226,22 @@ ipcMain.handle(
     }
   }
 );
+
+
+/**事件广播通知 */
+ipcMain.handle(
+  "event-broadcast",
+  (event, eventInfo: EventInfo) => {
+    // 遍历window执行 
+    for (const currentWin of BrowserWindow.getAllWindows()) {
+      // 注意，这里控制了发送广播的窗口，不触发对应事件，如果需要自身也触发的话，删除if内的逻辑即可
+      if (event) {
+        const webContentsId = currentWin.webContents.id;
+        if (webContentsId === event.sender.id) {
+          continue;
+        }
+      }
+      currentWin.webContents.send(eventInfo.channel, eventInfo.body);
+    }
+  }
+);

@@ -21,7 +21,16 @@ export function showProcess(isShow: boolean) {
   ipcRenderer.invoke("show-process", isShow);
 }
 
+/**
+ * 事件广播
+ * @param enevntInfo 事件对象
+ */
+export function eventBroadcast(enevntInfo: EventInfo) {
+  ipcRenderer.invoke("event-broadcast", enevntInfo);
+}
+
 export default {
   openWindow,
   showProcess,
+  eventBroadcast
 };

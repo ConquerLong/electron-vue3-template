@@ -3,16 +3,22 @@ import { useRouter } from "vue-router";
 import { useCounterStore } from "@store/counterStore";
 import langMap from "@/locales/langMap";
 import { loginApi } from "@api/auth";
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, onUnmounted } from "vue";
 import electronUtils from "@/utils/electronUtils";
 import myUtils from "@/utils/myUtils";
 import { ElMessage } from "element-plus";
+import { ipcRenderer } from "electron";
 
 onMounted(() => {
   const paramData = myUtils.getParamFromUrl();
   if (paramData) {
     ElMessage.success(paramData.message);
   }
+
+  ipcRenderer.on("test-event-broadcast", (e, data) => {
+    console.log("监听到广播内容：");
+    console.log(JSON.parse(data));
+  });
 });
 
 console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
@@ -54,6 +60,10 @@ const userInfo = reactive<IUserInfo>({
 });
 
 userInfo.likes.push("game");
+
+onUnmounted(() => {
+  ipcRenderer.removeListener("test-event-broadcast",()=>{});
+});
 </script>
 
 <template>

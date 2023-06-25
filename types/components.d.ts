@@ -31,7 +31,4 @@ declare module '@vue/runtime-core' {
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch.vue')['default']
     WeiXinLogin: typeof import('./../src/components/demo/WeiXinLogin.vue')['default']
   }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
-  }
 }
