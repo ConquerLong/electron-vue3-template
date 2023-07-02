@@ -61,7 +61,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
 
       // 主动更新
       updateStoreSync(
-        JSON.stringify(store.$state),
+        stringify(store.$state),
         storeName,
         store.storeUpdateVersion,
         true
@@ -83,7 +83,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
 
           // 主动更新
           updateStoreSync(
-            JSON.stringify(store.$state),
+            stringify(store.$state),
             storeName,
             store.storeUpdateVersion,
             false
@@ -124,7 +124,7 @@ export function shareStorePlugin({ store }: PiniaPluginContext) {
 
         /// 更新各个key对应的值的状态
         for (let i = 0; i < keys.length; i++) {
-          store.$state[keys[i]] = values[i];
+          changeState(store.$state, keys[i], values[i]);
         }
       }
     }
@@ -172,6 +172,23 @@ function setStoreVersion(storeName: string, storeUpdateVersion: number) {
 }
 
 /**
+ * 修改state的值
+ * 补充 如果反序列化的字段是map类型，需要额外处理
+ */
+function changeState(state: any, key: any, value: any) {
+  if (state[key] instanceof Map) {
+    if (value instanceof Array) {
+      state[key] = new Map(value);
+    } else {
+      state[key] = new Map(Object.entries(value as object));
+    }
+  } else {
+    state[key] = value;
+  }
+}
+
+
+/**
  * 初始化状态对象
  * @param store
  */
@@ -186,7 +203,39 @@ function initStore(store: any) {
 
     /// 更新各个key对应的值的状态
     for (let i = 0; i < keys.length; i++) {
-      store.$state[keys[i]] = values[i];
+      changeState(store.$state, keys[i], values[i]);
     }
   }
+}
+
+/**
+ * 2023/07/03 自定义序列化方式， 处理ts中map类型/对象序列化后为 {} 的情况
+ */
+function stringify(obj: any): string {
+  return JSON.stringify(cloneToObject(obj));
+}
+
+// 将字段包含map的对象转为json对象的格式
+function cloneToObject(obj: any): any {
+  let newObj: any = obj;
+  if (obj instanceof Map) {
+    return Object.fromEntries(obj);
+  }
+  if (obj instanceof Object) {
+    newObj = {};
+    const keys = Object.keys(obj);
+    const values = Object.values(obj);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const value = values[i];
+      newObj[key] = cloneToObject(value);
+    }
+  }
+  if (obj instanceof Array) {
+    newObj = [];
+    for (let i = 0; i < obj.length; i++) {
+      newObj[i] = cloneToObject(obj[i]);
+    }
+  }
+  return newObj;
 }

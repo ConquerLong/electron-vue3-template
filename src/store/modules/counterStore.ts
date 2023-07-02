@@ -4,6 +4,11 @@ interface ICounterStore {
   counter: number;
   messages: Array<string>;
   map: Map<string, string>;
+  flag1:boolean;
+  flag2:boolean;
+  flag3:boolean;
+  flag4:boolean;
+  flag5:boolean;
 }
 
 // 定义一个Store，名称要保证全局唯一
@@ -13,7 +18,12 @@ export const useCounterStore = defineStore("counterStore", {
     return {
       counter: 0,
       messages: new Array<string>(),
-      map: new Map<string, string>(),
+      map: new Map<string,string>(),
+      flag1:true,
+      flag2:false,
+      flag3:true,
+      flag4:false,
+      flag5:true
     };
   },
 
@@ -23,7 +33,6 @@ export const useCounterStore = defineStore("counterStore", {
     increment() {
       console.log("actions方法改变state的值");
       this.counter++;
-      this.messages.push("你好");
     },
 
     /**模拟异步等待2秒后加100 */
