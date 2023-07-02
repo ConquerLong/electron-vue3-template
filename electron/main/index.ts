@@ -136,7 +136,7 @@ app.on("open-url", (event, urlStr) => {
  * route=>路由地址  paramJsonStr => 序列化后的参数对象
  */
 ipcMain.handle("open-win", (_, route: string, paramJsonStr: string) => {
-  const childWindow = new BrowserWindow({
+  let childWindow = new BrowserWindow({
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -149,6 +149,11 @@ ipcMain.handle("open-win", (_, route: string, paramJsonStr: string) => {
   } else {
     childWindow.loadFile(indexHtml, { hash: route + paramData });
   }
+  childWindow.on("closed", () => {
+    // 在窗口对象被关闭时，取消订阅所有与该窗口相关的事件
+    childWindow.removeAllListeners();
+    childWindow = null;
+  });
 });
 
 /**
@@ -184,7 +189,7 @@ ipcMain.handle("lang:change", (event, lang) => {
   for (const currentWin of BrowserWindow.getAllWindows()) {
     const webContentsId = currentWin.webContents.id;
     // 这里排除掉发送通知的窗口
-    if (webContentsId !== event.sender.id) {
+    if (webContentsId !== event.sender.id && !currentWin.isDestroyed()) {
       currentWin.webContents.send("lang:change", lang);
     }
   }
@@ -201,7 +206,7 @@ ipcMain.handle(
     // 遍历window执行
     for (const currentWin of BrowserWindow.getAllWindows()) {
       const webContentsId = currentWin.webContents.id;
-      if (webContentsId !== event.sender.id) {
+      if (webContentsId !== event.sender.id && !currentWin.isDestroyed()) {
         currentWin.webContents.send("theme-style:changed", mode);
       }
     }
@@ -211,37 +216,40 @@ ipcMain.handle(
 /**pinia多窗口共享 */
 ipcMain.handle(
   "pinia-store-change",
-  (event, storeName: string, jsonStr: string, isResetVersion: boolean) => {
+  (
+    event,
+    storeName: string,
+    jsonStr: string,
+    isResetVersion: boolean,
+    storeUpdateVersion: number
+  ) => {
     // 遍历window执行
     for (const currentWin of BrowserWindow.getAllWindows()) {
       const webContentsId = currentWin.webContents.id;
-      if (webContentsId !== event.sender.id) {
+      if (webContentsId !== event.sender.id && !currentWin.isDestroyed()) {
         currentWin.webContents.send(
           "pinia-store-set",
           storeName,
           jsonStr,
-          isResetVersion
+          isResetVersion,
+          storeUpdateVersion
         );
       }
     }
   }
 );
 
-
 /**事件广播通知 */
-ipcMain.handle(
-  "event-broadcast",
-  (event, eventInfo: EventInfo) => {
-    // 遍历window执行 
-    for (const currentWin of BrowserWindow.getAllWindows()) {
-      // 注意，这里控制了发送广播的窗口，不触发对应事件，如果需要自身也触发的话，删除if内的逻辑即可
-      if (event) {
-        const webContentsId = currentWin.webContents.id;
-        if (webContentsId === event.sender.id) {
-          continue;
-        }
+ipcMain.handle("event-broadcast", (event, eventInfo: EventInfo) => {
+  // 遍历window执行
+  for (const currentWin of BrowserWindow.getAllWindows()) {
+    // 注意，这里控制了发送广播的窗口，不触发对应事件，如果需要自身也触发的话，删除if内的逻辑即可
+    if (event) {
+      const webContentsId = currentWin.webContents.id;
+      if (webContentsId === event.sender.id) {
+        continue;
       }
-      currentWin.webContents.send(eventInfo.channel, eventInfo.body);
     }
+    currentWin.webContents.send(eventInfo.channel, eventInfo.body);
   }
-);
+});

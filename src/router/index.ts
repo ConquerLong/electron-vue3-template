@@ -32,8 +32,12 @@ const router = createRouter({
       component: () => import("@/components/demo/sassDemo.vue"),
     },
     {
-      path: "/demo/ThemeDemo",
+      path: "/demo/themeDemo",
       component: () => import("@/components/demo/ThemeDemo.vue"),
+    },
+    {
+      path: "/demo/piniaTest",
+      component: () => import("@/components/demo/piniaTest.vue"),
     },
   ],
 });

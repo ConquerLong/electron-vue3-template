@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
     Language: typeof import('./../src/components/Language.vue')['default']
     MockApiDemo: typeof import('./../src/components/demo/MockApiDemo.vue')['default']
     MockDemo: typeof import('./../src/components/demo/MockDemo.vue')['default']
+    PiniaTest: typeof import('./../src/components/demo/PiniaTest.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SassDemo: typeof import('./../src/components/demo/sassDemo.vue')['default']
