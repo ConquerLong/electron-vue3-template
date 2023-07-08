@@ -29,8 +29,17 @@ export function eventBroadcast(enevntInfo: EventInfo) {
   ipcRenderer.invoke("event-broadcast", enevntInfo);
 }
 
+/**
+ * 窗口是否可以跟随鼠标移动
+ * @param flag
+ */
+export function windowMove(flag: boolean) {
+  ipcRenderer.send("window-move-open", flag);
+}
+
 export default {
   openWindow,
   showProcess,
-  eventBroadcast
+  eventBroadcast,
+  windowMove
 };

@@ -19,8 +19,8 @@
     }
   },
   "scripts": {
-    "dev": "vite --mode development",
-    "pro": "vite --mode production",
+    "dev": "chcp 65001 && vite --mode development",
+    "pro": "chcp 65001 && vite --mode production",
     "build": "vue-tsc --noEmit && vite build && electron-builder"
   },
   "devDependencies": {

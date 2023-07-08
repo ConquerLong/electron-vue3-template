@@ -1,4 +1,7 @@
 <template>
+  <drag-tool>
+    <div class="drag-box">拖拽区域</div>
+  </drag-tool>
   <h1>{{ $t(langMap.app_title) }}</h1>
   <h1>这是demo页 当前计数为：{{ counterStore.counter }}</h1>
   <ul>
@@ -71,12 +74,23 @@ console.log("自定义工具类进行序列化");
 console.log(myUtils.stringify(lzp));
 
 // 事件广播测试
-function eventBroadcast(){
-  electronUtils.eventBroadcast({channel:"test-event-broadcast",body:JSON.stringify({name:'编程小龙',value:'hello'})});
+function eventBroadcast() {
+  electronUtils.eventBroadcast({
+    channel: "test-event-broadcast",
+    body: JSON.stringify({ name: "编程小龙", value: "hello" }),
+  });
 }
 </script>
 
 <style scoped lang="scss">
+.drag-box {
+  width: 200px;
+  height: 50px;
+  border: 1px solid #ccc;
+  background: pink;
+  margin: 0 auto;
+  user-select: none;
+}
 h1 {
   color: $primaryColor;
 }
