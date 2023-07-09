@@ -286,8 +286,8 @@ let movingInterval = null;
 ipcMain.on("window-move-open", (event, canMoving) => {
   let winStartPosition = { x: 0, y: 0 };
   let mouseStartPosition = { x: 0, y: 0 };
-  const currentWindow = getWindowByEvent(event);
-
+  // 获取当前聚焦的窗口
+  const currentWindow = BrowserWindow.getFocusedWindow();
   const currentWindowSize = currentWindow.getSize();
 
   if (currentWindow) {
