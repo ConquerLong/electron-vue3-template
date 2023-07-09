@@ -2,6 +2,9 @@
 
 本工程是在工作学习中对 electron+vue3 体系的学习与总结，所有使用案例均放在 [compoents/demo 目录](src\components\demo)下
 
+博客讲解：[electron+vue3全家桶专栏](https://blog.csdn.net/qq_42365534/category_12271233.html)  
+视频讲解：[electron+vue3全家桶视频讲解合集](https://space.bilibili.com/99214150/channel/collectiondetail?sid=1247775)
+
 # 技术栈
 
 | 技术         | 描述                      | 学习地址                                                            |
