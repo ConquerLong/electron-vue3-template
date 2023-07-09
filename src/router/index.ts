@@ -7,7 +7,10 @@ const router = createRouter({
     // 设置首页
     {
       path: "/",
-      component: () => import("../components/demo/Index.vue"),
+      component: () =>
+        G_IS_BUILD
+          ? import("../components/HelloWorld.vue")
+          : import("../components/demo/Index.vue"),
     },
     // 配置helloworld页的路径
     {
@@ -29,7 +32,7 @@ const router = createRouter({
     },
     {
       path: "/demo/sassDemo",
-      component: () => import("@/components/demo/sassDemo.vue"),
+      component: () => import("@/components/demo/SassDemo.vue"),
     },
     {
       path: "/demo/themeDemo",
@@ -37,7 +40,7 @@ const router = createRouter({
     },
     {
       path: "/demo/piniaTest",
-      component: () => import("@/components/demo/piniaTest.vue"),
+      component: () => import("@/components/demo/PiniaTest.vue"),
     },
   ],
 });

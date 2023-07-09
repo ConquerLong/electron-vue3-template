@@ -27,7 +27,7 @@ declare module '@vue/runtime-core' {
     PiniaTest: typeof import('./../src/components/demo/PiniaTest.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SassDemo: typeof import('./../src/components/demo/sassDemo.vue')['default']
+    SassDemo: typeof import('./../src/components/demo/SassDemo.vue')['default']
     SvgIcon: typeof import('./../src/components/SvgIcon.vue')['default']
     ThemeDemo: typeof import('./../src/components/demo/ThemeDemo.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch.vue')['default']

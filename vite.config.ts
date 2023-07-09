@@ -21,6 +21,10 @@ export default defineConfig(({ command }) => {
   const sourcemap = isServe || !!process.env.VSCODE_DEBUG;
 
   return {
+    // 动态设置全局变量，用于编译时使用的全局常量
+    define: {
+      G_IS_BUILD: isBuild // 用于渲染进程判断当前是否为打包环境
+    },
     envDir: path.resolve(__dirname, "./env"),
     resolve: {
       alias: {
