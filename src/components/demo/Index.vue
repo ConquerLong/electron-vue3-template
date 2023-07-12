@@ -39,6 +39,7 @@ import { ref } from "vue";
 import electronUtils from "@/utils/electronUtils";
 import langMap from "@/locales/langMap";
 import myUtils from "@/utils/myUtils";
+import { ipcRenderer } from "electron";
 
 const counterStore = useCounterStore();
 const router = useRouter();

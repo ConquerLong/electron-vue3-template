@@ -64,6 +64,12 @@ userInfo.likes.push("game");
 onUnmounted(() => {
   ipcRenderer.removeListener("test-event-broadcast",()=>{});
 });
+
+// 通过浏览器唤醒应用的url获取房间号
+function getRoomCodeByUrl() {
+  const roomCode = ipcRenderer.sendSync("get-roomCode");
+  myUtils.message(`房间号为：${roomCode}`, "success");
+}
 </script>
 
 <template>
@@ -111,6 +117,9 @@ onUnmounted(() => {
       <el-button type="warning" @click="switchProcess">{{
         showProcess ? "关闭process" : "显示process"
       }}</el-button>
+    </li>
+    <li>
+      <el-button @click="getRoomCodeByUrl">获取url中传来的房间号</el-button>
     </li>
     <!-- 微信登录
     <wei-xin-login></wei-xin-login> -->
