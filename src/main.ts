@@ -4,7 +4,7 @@ import "element-plus/theme-chalk/el-message.css";
 import "element-plus/theme-chalk/el-message-box.css";
 import "element-plus/theme-chalk/el-loading.css";
 import App from "./App.vue";
-import "./samples/node-api";
+import "./scripts/appInit";
 import router from "./router";
 import pinia from "./store";
 import i18n from "./locales";

@@ -14,13 +14,15 @@ if (release().startsWith("6.1")) app.disableHardwareAcceleration();
 // Set application name for Windows 10+ notifications
 if (process.platform === "win32") app.setAppUserModelId(app.getName());
 
+// 单例锁，保证只有一个app运行
 if (!app.requestSingleInstanceLock()) {
   app.quit();
   process.exit(0);
 }
 
+//*************** 应用唤醒相关 ********************/
 // 注册协议
-const PROTOCOL = "lzpelectrondemo";
+const PROTOCOL = "bcxlelectrondemo";
 /**添加注册表信息 用于浏览器启动客户端 */
 function registerScheme() {
   const args = [];
@@ -33,6 +35,7 @@ function registerScheme() {
   app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, args);
   handleArgv(process.argv);
 }
+
 // 处理浏览器打开应用的启动参数信息
 function handleArgv(argv: string[]) {
   const prefix = `${PROTOCOL}:`;
@@ -42,18 +45,28 @@ function handleArgv(argv: string[]) {
   const url = argv.find((arg, i) => i >= offset && arg.startsWith(prefix));
   if (url) handleUrl(url);
 }
-// 处理url请求
+// 房间号
+let roomCode = "";
+
+// 处理url打开应用的请求
 function handleUrl(url: string) {
-  // tuiroom://joinroom?roomId=123
+  // bcxlelectrondemo://joinRoom?roomCode=123
   const urlObj = new URL(url);
   const { searchParams } = urlObj;
-  const schemeRoomId = searchParams.get("roomId") || "";
+  roomCode = searchParams.get("roomCode") || "";
   if (win && win.webContents) {
-    win?.webContents.send("launch-app", schemeRoomId);
+    win?.webContents.send("launch-app", roomCode);
   }
 }
 
-// Remove electron security warnings
+// 主动获取房间号，因为应用通过url唤醒时，可能页面窗口还未初始化完成，这时win是null，收不到“launch-app”的监听
+ipcMain.on("get-roomCode", (e) => {
+  e.returnValue = roomCode;
+});
+
+//*************** 应用唤醒相关 ********************/
+
+// Remove electron secu rity warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
@@ -109,10 +122,12 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
 
-app.on("second-instance", () => {
+// 监听windows的第二个实例唤醒，来实现应用打开的情况下，截取url地址
+app.on('second-instance', (event, argv, workingDirectory) => {
   if (win) {
-    // Focus on the main window if the user tried to open another
+    // 恢复窗口，并重新聚焦
     if (win.isMinimized()) win.restore();
+    handleArgv(argv);
     win.focus();
   }
 });
@@ -227,21 +242,17 @@ ipcMain.handle(
   }
 );
 
-
 /**事件广播通知 */
-ipcMain.handle(
-  "event-broadcast",
-  (event, eventInfo: EventInfo) => {
-    // 遍历window执行 
-    for (const currentWin of BrowserWindow.getAllWindows()) {
-      // 注意，这里控制了发送广播的窗口，不触发对应事件，如果需要自身也触发的话，删除if内的逻辑即可
-      if (event) {
-        const webContentsId = currentWin.webContents.id;
-        if (webContentsId === event.sender.id) {
-          continue;
-        }
+ipcMain.handle("event-broadcast", (event, eventInfo: EventInfo) => {
+  // 遍历window执行
+  for (const currentWin of BrowserWindow.getAllWindows()) {
+    // 注意，这里控制了发送广播的窗口，不触发对应事件，如果需要自身也触发的话，删除if内的逻辑即可
+    if (event) {
+      const webContentsId = currentWin.webContents.id;
+      if (webContentsId === event.sender.id) {
+        continue;
       }
-      currentWin.webContents.send(eventInfo.channel, eventInfo.body);
     }
+    currentWin.webContents.send(eventInfo.channel, eventInfo.body);
   }
-);
+});
