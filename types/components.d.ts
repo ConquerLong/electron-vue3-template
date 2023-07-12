@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    DragTool: typeof import('./../src/components/DragTool.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
@@ -23,9 +24,10 @@ declare module '@vue/runtime-core' {
     Language: typeof import('./../src/components/Language.vue')['default']
     MockApiDemo: typeof import('./../src/components/demo/MockApiDemo.vue')['default']
     MockDemo: typeof import('./../src/components/demo/MockDemo.vue')['default']
+    PiniaTest: typeof import('./../src/components/demo/PiniaTest.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SassDemo: typeof import('./../src/components/demo/sassDemo.vue')['default']
+    SassDemo: typeof import('./../src/components/demo/SassDemo.vue')['default']
     SvgIcon: typeof import('./../src/components/SvgIcon.vue')['default']
     ThemeDemo: typeof import('./../src/components/demo/ThemeDemo.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch.vue')['default']

@@ -15,3 +15,7 @@ interface ImportMetaEnv {
   readonly VITE_BASE_URL: string; // 基础请求
   readonly VITE_DEV_PARAM: string; // dev环境的一个参数 仅作为演示使用
 }
+
+/** 定义全局变 */
+// 当前是否为打包状态
+declare const G_IS_BUILD: boolean

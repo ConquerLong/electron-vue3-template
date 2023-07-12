@@ -2,37 +2,33 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  "appId": "YourAppID",
-  "asar": true,
-  "icon": "public/favicon.ico",
-  "directories": {
-    "output": "release/${version}"
+  appId: "YourAppID",
+  asar: true,
+  icon: "public/favicon.ico",
+  directories: {
+    output: "release/${version}",
   },
-  "files": [
-    "dist-electron",
-    "dist"
-  ],
-  "mac": {
-    "artifactName": "${productName}_${version}.${ext}",
-    "target": [
-      "dmg"
-    ]
+  files: ["dist-electron", "dist"],
+  mac: {
+    // 注意mac的icon和windows的是不一样的
+    icon: "public/icons/icon.icns",
+    artifactName: "${productName}_${version}.${ext}",
+    target: ["dmg"],
   },
-  "win": {
-    "target": [
+  win: {
+    icon: "public/icons/icon.ico",
+    target: [
       {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      }
+        target: "nsis",
+        arch: ["x64"],
+      },
     ],
-    "artifactName": "${productName}_${version}.${ext}"
+    artifactName: "${productName}_${version}.${ext}",
   },
-  "nsis": {
-    "oneClick": false,
-    "perMachine": false,
-    "allowToChangeInstallationDirectory": true,
-    "deleteAppDataOnUninstall": false
-  }
+  nsis: {
+    oneClick: false,
+    perMachine: false,
+    allowToChangeInstallationDirectory: true,
+    deleteAppDataOnUninstall: false,
+  },
 }
