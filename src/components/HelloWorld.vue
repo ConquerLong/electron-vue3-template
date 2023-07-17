@@ -15,11 +15,14 @@ onMounted(() => {
     ElMessage.success(paramData.message);
   }
 
-  ipcRenderer.on("test-event-broadcast", (e, data) => {
-    console.log("监听到广播内容：");
-    console.log(JSON.parse(data));
-  });
+  ipcRenderer.on("test-event-broadcast",eventBroadcastHandle);
 });
+
+// 广播事件处理
+function eventBroadcastHandle(e:any, data:any){
+  console.log("监听到广播内容：");
+    console.log(JSON.parse(data));
+}
 
 console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
 const counterStore = useCounterStore();
@@ -62,7 +65,7 @@ const userInfo = reactive<IUserInfo>({
 userInfo.likes.push("game");
 
 onUnmounted(() => {
-  ipcRenderer.removeListener("test-event-broadcast",()=>{});
+  ipcRenderer.removeListener("test-event-broadcast",eventBroadcastHandle);
 });
 
 // 通过浏览器唤醒应用的url获取房间号
