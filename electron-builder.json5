@@ -31,4 +31,11 @@
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: false,
   },
+  // 配置安装包更新地址
+  publish: [
+    {
+      provider: "generic",
+      url: "http://common.longzipeng.online/package/auto",
+    },
+  ],
 }

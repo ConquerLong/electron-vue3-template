@@ -9,6 +9,7 @@ import {
 } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
+import { checkUpdate } from './appVersion';
 
 process.env.DIST_ELECTRON = join(__dirname, "..");
 process.env.DIST = join(process.env.DIST_ELECTRON, "../dist");
@@ -298,7 +299,7 @@ let movingInterval = null;
 /**
  * 窗口移动事件
  */
-ipcMain.on("window-move-open", (event, canMoving) => {
+ipcMain.handle("window-move-open", (event, canMoving) => {
   let winStartPosition = { x: 0, y: 0 };
   let mouseStartPosition = { x: 0, y: 0 };
   // 获取当前聚焦的窗口
@@ -344,4 +345,14 @@ ipcMain.on("window-move-open", (event, canMoving) => {
       movingInterval = null;
     }
   }
+});
+
+/**
+* 版本更新检测
+*/
+ipcMain.handle("check-update",(e:any)=>{
+  // 获取发送通知的渲染进程窗口
+  const currentWin = getWindowByEvent(e);
+  // 升级校验
+  checkUpdate(currentWin);
 });

@@ -34,12 +34,20 @@ export function eventBroadcast(enevntInfo: EventInfo) {
  * @param flag
  */
 export function windowMove(flag: boolean) {
-  ipcRenderer.send("window-move-open", flag);
+  ipcRenderer.invoke("window-move-open", flag);
+}
+
+/**
+ * 检查版本更新
+ */
+export function checkUpdate(){
+  ipcRenderer.invoke("check-update");
 }
 
 export default {
   openWindow,
   showProcess,
   eventBroadcast,
-  windowMove
+  windowMove,
+  checkUpdate
 };
