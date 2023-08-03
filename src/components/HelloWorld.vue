@@ -21,7 +21,7 @@ onMounted(() => {
 
 });
 
-// 测试事件广播
+// 广播事件处理
 function eventBroadcastHandle(e:any, data:any){
   console.log("监听到广播内容：");
     console.log(JSON.parse(data));
@@ -30,7 +30,6 @@ function eventBroadcastHandle(e:any, data:any){
 function downloadProgressHandle(e:any,data:any){
   console.log(data);
 }
-
 console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
 const counterStore = useCounterStore();
 
