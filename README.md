@@ -9,7 +9,7 @@
 
 | 技术         | 描述                      | 学习地址                                                            |
 | ------------ | ------------------------- | ------------------------------------------------------------------- |
-| electron     | 写前端的方式开发桌面端    |                                                                     |
+| electron     | 写前端的方式开发桌面端    |  [官网](https://www.electronjs.org/zh/docs/latest/api/app)                                                                   |
 | vite         | 新一代前端构建工具        | [官网](https://cn.vitejs.dev/guide/)                                |
 | vue3         | 渐进式前端框架            | [官网](https://cn.vuejs.org/guide/components/props.html)            |
 | typescript   | js 的超集，更好的代码提示 | [菜鸟教程](https://www.runoob.com/typescript/ts-object.html)        |
