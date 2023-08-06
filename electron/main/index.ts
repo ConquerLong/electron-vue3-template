@@ -9,7 +9,11 @@ import {
 } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
-import { checkUpdate } from './appVersion';
+import { checkUpdate } from "./appVersion";
+import { initIpcDemo } from "./ipcDemo";
+
+// 初始化ipc通信Demo
+initIpcDemo();
 
 process.env.DIST_ELECTRON = join(__dirname, "..");
 process.env.DIST = join(process.env.DIST_ELECTRON, "../dist");
@@ -101,6 +105,13 @@ async function createWindow() {
     },
   });
 
+  let number = 1;
+  setInterval(() => {
+    if (win && win.webContents) {
+      win.webContents.send("event-from-main", "计数" + number++);
+    }
+  }, 2000);
+
   if (process.env.VITE_DEV_SERVER_URL) {
     // electron-vite-vue#298
     win.loadURL(url);
@@ -132,7 +143,7 @@ app.on("window-all-closed", () => {
 });
 
 // 监听windows的第二个实例唤醒，来实现应用打开的情况下，截取url地址
-app.on('second-instance', (event, argv, workingDirectory) => {
+app.on("second-instance", (event, argv, workingDirectory) => {
   if (win) {
     // 恢复窗口，并重新聚焦
     if (win.isMinimized()) win.restore();
@@ -323,7 +334,7 @@ ipcMain.handle("window-move-open", (event, canMoving) => {
           // 如果窗口失去焦点，则停止移动
           if (!currentWindow.isFocused()) {
             clearInterval(movingInterval);
-            movingInterval = null;  
+            movingInterval = null;
           }
           // 实时更新位置
           const cursorPosition = screen.getCursorScreenPoint();
@@ -331,7 +342,7 @@ ipcMain.handle("window-move-open", (event, canMoving) => {
             winStartPosition.x + cursorPosition.x - mouseStartPosition.x;
           const y =
             winStartPosition.y + cursorPosition.y - mouseStartPosition.y;
-            // 更新位置的同时设置窗口原大小， windows上设置=>显示设置=>文本缩放 不是100%时，窗口会拖拽放大
+          // 更新位置的同时设置窗口原大小， windows上设置=>显示设置=>文本缩放 不是100%时，窗口会拖拽放大
           currentWindow.setBounds({
             x: x,
             y: y,
@@ -348,9 +359,9 @@ ipcMain.handle("window-move-open", (event, canMoving) => {
 });
 
 /**
-* 版本更新检测
-*/
-ipcMain.handle("check-update",(e:any)=>{
+ * 版本更新检测
+ */
+ipcMain.handle("check-update", (e: any) => {
   // 获取发送通知的渲染进程窗口
   const currentWin = getWindowByEvent(e);
   // 升级校验

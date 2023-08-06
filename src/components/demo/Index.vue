@@ -10,6 +10,7 @@
     <li><router-link to="/demo/mockApiDemo">前端模拟接口</router-link></li>
     <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
     <li><router-link to="/demo/themeDemo">themeDemo</router-link></li>
+    <li><router-link to="/demo/ipcDemo">ipcDemo</router-link></li>
     <li>
       <el-select
         v-model="windowPath"

@@ -42,6 +42,10 @@ const router = createRouter({
       path: "/demo/piniaTest",
       component: () => import("@/components/demo/PiniaTest.vue"),
     },
+    {
+      path: "/demo/ipcDemo",
+      component: () => import("@/components/demo/ipcDemo.vue"),
+    },
   ],
 });
 
