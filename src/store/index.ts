@@ -1,5 +1,6 @@
 import { createPinia } from "pinia";
-import { shareStorePlugin } from "./plugins/shareStorePlugin";
+// import { shareStorePlugin } from "./plugins/shareStorePlugin";
+import { shareStorePlugin } from "./plugins/shareStoreByActionPlugin";
 
 const pinia = createPinia();
 

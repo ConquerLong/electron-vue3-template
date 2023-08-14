@@ -15,19 +15,19 @@ onMounted(() => {
     ElMessage.success(paramData.message);
   }
 
-  ipcRenderer.on("test-event-broadcast",eventBroadcastHandle);
+  ipcRenderer.on("test-event-broadcast", eventBroadcastHandle);
   // 版本更新，下载进度回调
-  ipcRenderer.on("download-progress",downloadProgressHandle);
-
+  ipcRenderer.on("download-progress", downloadProgressHandle);
 });
 
 // 广播事件处理
-function eventBroadcastHandle(e:any, data:any){
+function eventBroadcastHandle(e: any, data: any) {
   console.log("监听到广播内容：");
-    console.log(JSON.parse(data));
+  console.log(JSON.parse(data));
+  // counterStore.myAction()
 }
 // 版本更新，处理下载进度回调
-function downloadProgressHandle(e:any,data:any){
+function downloadProgressHandle(e: any, data: any) {
   console.log(data);
 }
 console.log("dev独有的环境变量：" + import.meta.env.VITE_DEV_PARAM);
@@ -71,8 +71,8 @@ const userInfo = reactive<IUserInfo>({
 userInfo.likes.push("game");
 
 onUnmounted(() => {
-  ipcRenderer.removeListener("test-event-broadcast",eventBroadcastHandle);
-  ipcRenderer.removeListener("download-progress",downloadProgressHandle);
+  ipcRenderer.removeListener("test-event-broadcast", eventBroadcastHandle);
+  ipcRenderer.removeListener("download-progress", downloadProgressHandle);
 });
 
 // 通过浏览器唤醒应用的url获取房间号
