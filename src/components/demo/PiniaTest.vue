@@ -1,6 +1,8 @@
 <template>
   <div class="pinia-box">
+    <h3>注意：需自行切换同步插件来演示不同的效果<span style="font-size: 12px;color: orange;">默认使用shareStoreByActionPlugin</span></h3>
     <ul>
+      <li><el-button @click="stateSync">主动同步pinia状态</el-button> <span style="font-size: 12px;color: orange;">只有pinia插件使用shareStoreByActionPlugin时才生效</span></li>
       <li>
         当前值为{{ counterStore.counter }}
         <el-button @click="counterStore.counter++">自增count</el-button>
@@ -80,6 +82,10 @@ function mapAdd() {
     counterStore.counter + "",
     counterStore.counter + "_" + counterStore.counter
   );
+}
+// 同步pinia状态
+function stateSync(){
+  counterStore.stateSync();
 }
 </script>
 
