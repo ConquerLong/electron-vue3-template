@@ -6,6 +6,7 @@ import {
   nativeTheme,
   screen,
   IpcMainEvent,
+  session,
 } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
@@ -91,6 +92,13 @@ const url = process.env.VITE_DEV_SERVER_URL;
 const indexHtml = join(process.env.DIST, "index.html");
 
 async function createWindow() {
+  // 加载vue插件 plugins/vuetools6.5.1
+  if (!app.isPackaged) {
+    await session.defaultSession.loadExtension(
+      join(__dirname, "../../plugins/vuetools6.5.1")
+    );
+  }
+
   win = new BrowserWindow({
     title: "Main window",
     icon: join(process.env.PUBLIC, "icons/icon.ico"),
