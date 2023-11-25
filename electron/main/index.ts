@@ -375,3 +375,4 @@ ipcMain.handle("check-update", (e: any) => {
   // 升级校验
   checkUpdate(currentWin);
 });
+
