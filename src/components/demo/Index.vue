@@ -30,6 +30,7 @@
       <el-button @click="openWindow">新建窗口</el-button>
     </li>
     <li><el-button @click="eventBroadcast">测试事件广播</el-button></li>
+    <li><el-button @click="decoratorTest">测试装饰器</el-button></li>
   </ul>
 </template>
 
@@ -81,6 +82,11 @@ function eventBroadcast() {
     channel: "test-event-broadcast",
     body: JSON.stringify({ name: "编程小龙", value: "hello" }),
   });
+}
+
+// 测试装饰器
+function decoratorTest() {
+  ipcRenderer.invoke("gogo",99);
 }
 </script>
 

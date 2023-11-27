@@ -12,6 +12,7 @@ import { release } from "node:os";
 import { join } from "node:path";
 import { checkUpdate } from "./appVersion";
 import { initIpcDemo } from "./ipcDemo";
+import {IpcMainListenerDecorator} from './decorators'
 
 // 初始化ipc通信Demo
 initIpcDemo();
@@ -375,4 +376,3 @@ ipcMain.handle("check-update", (e: any) => {
   // 升级校验
   checkUpdate(currentWin);
 });
-
