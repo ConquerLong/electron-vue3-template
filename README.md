@@ -24,15 +24,15 @@
 
 ```cmd
 # 指定 npm 国内镜像
-npm config set registry=https://registry.npm.taobao.org/
+npm config set registry=https://registry.npmmirror.com/
 # 指定 Electron 的国内镜像地址
-npm config set electron_mirror=https://npm.taobao.org/mirrors/electron/
+npm config set electron_mirror=https://npmmirror.com/mirrors/electron/
 ```
 
 或者简单粗暴，直接改 C:\Users\[用户]\.npmrc
 
 ```.npmrc
-registry=https://registry.npm.taobao.org/
+registry=https://registry.npmmirror.com/
 ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 ```
 
@@ -42,7 +42,20 @@ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 npm i
 ```
 
-3. 快速删除 node_modules
+3. 如果依赖安装失败，使用 cnpm 装
+
+```cmd
+# 安装cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+# 使用cnpm安装依赖
+cnpm i
+# 已发现 i18n使用cnm安装的依赖会导致打包失败，推荐使用pnpm安装依赖
+npm install -g pnpm
+pnpm i
+
+```
+
+4. 快速删除 node_modules
 
 ```cmd
 # 全局安装依赖
