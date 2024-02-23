@@ -18,10 +18,10 @@
       "@/*": ["./src/*"],
       "@store/*": ["./src/store/modules/*"],
       "@api/*": ["./src/api/*"],
-      "@globel/*": ["globel/*"],
+      "@globel/*": ["globel/*"]
     },
     "types": ["vite-plugin-svg-icons/client"]
   },
-  "include": ["src", "types"],
+  "include": ["src", "types", "globel"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
