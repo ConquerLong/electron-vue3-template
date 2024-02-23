@@ -24,15 +24,15 @@
 
 ```cmd
 # 指定 npm 国内镜像
-npm config set registry=https://registry.npm.taobao.org/
+npm config set registry=https://registry.npmmirror.com/
 # 指定 Electron 的国内镜像地址
-npm config set electron_mirror=https://npm.taobao.org/mirrors/electron/
+npm config set electron_mirror=https://npmmirror.com/mirrors/electron/
 ```
 
 或者简单粗暴，直接改 C:\Users\[用户]\.npmrc
 
 ```.npmrc
-registry=https://registry.npm.taobao.org/
+registry=https://registry.npmmirror.com/
 ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 ```
 
