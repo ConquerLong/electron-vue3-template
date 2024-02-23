@@ -10,7 +10,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import path from "path";
-import mockServer from "vite-plugin-mock-server";
+// import mockServer from "vite-plugin-mock-server";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
 export default defineConfig(({ command }) => {
@@ -31,6 +31,7 @@ export default defineConfig(({ command }) => {
         "@": path.resolve(__dirname, "./src"),
         "@store": path.resolve(__dirname, "./src/store/modules"),
         "@api": path.resolve(__dirname, "./src/api"),
+        "@globel": path.resolve(__dirname, "./globel"),
       },
     },
     plugins: [
@@ -127,14 +128,14 @@ export default defineConfig(({ command }) => {
         autoInstall: true,
       }),
       // mock数据
-      mockServer({
-        logLevel: "info",
-        urlPrefixes: ["/api/"],
-        mockRootDir: path.relative(__dirname, "./src/api/mock"),
-        mockJsSuffix: ".mock.js",
-        mockTsSuffix: ".mock.ts",
-        noHandlerResponse404: true,
-      }),
+      // mockServer({
+      //   logLevel: "info",
+      //   urlPrefixes: ["/api/"],
+      //   mockRootDir: path.relative(__dirname, "./src/api/mock"),
+      //   mockJsSuffix: ".mock.js",
+      //   mockTsSuffix: ".mock.ts",
+      //   noHandlerResponse404: true,
+      // }),
     ],
     css: {
       preprocessorOptions: {

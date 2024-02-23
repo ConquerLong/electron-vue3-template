@@ -12,7 +12,12 @@ import { release } from "node:os";
 import { join } from "node:path";
 import { checkUpdate } from "./appVersion";
 import { initIpcDemo } from "./ipcDemo";
-import {IpcMainListenerDecorator} from './decorators'
+import {WindowUtils} from './windowUtils'
+
+
+// 创建窗口工具类
+const windowUtils = new WindowUtils();
+windowUtils.listen();
 
 // 初始化ipc通信Demo
 initIpcDemo();
@@ -100,19 +105,22 @@ async function createWindow() {
     );
   }
 
-  win = new BrowserWindow({
-    title: "Main window",
-    icon: join(process.env.PUBLIC, "icons/icon.ico"),
-    webPreferences: {
-      webviewTag: true,
-      preload,
-      // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
+  win = windowUtils.createWindows({
+    route:"/"
   });
+  // win = new BrowserWindow({
+  //   title: "Main window",
+  //   icon: join(process.env.PUBLIC, "icons/icon.ico"),
+  //   webPreferences: {
+  //     webviewTag: true,
+  //     preload,
+  //     // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
+  //     // Consider using contextBridge.exposeInMainWorld
+  //     // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
+  //     nodeIntegration: true,
+  //     contextIsolation: false,
+  //   },
+  // });
 
   let number = 1;
   setInterval(() => {
@@ -121,14 +129,14 @@ async function createWindow() {
     }
   }, 2000);
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    // electron-vite-vue#298
-    win.loadURL(url);
-    // Open devTool if the app is not packaged
-    win.webContents.openDevTools();
-  } else {
-    win.loadFile(indexHtml);
-  }
+  // if (process.env.VITE_DEV_SERVER_URL) {
+  //   // electron-vite-vue#298
+  //   win.loadURL(url);
+  //   // Open devTool if the app is not packaged
+  //   win.webContents.openDevTools();
+  // } else {
+  //   win.loadFile(indexHtml);
+  // }
 
   // Test actively push message to the Electron-Renderer
   win.webContents.on("did-finish-load", () => {

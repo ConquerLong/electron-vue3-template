@@ -11,13 +11,14 @@
     <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
     <li><router-link to="/demo/themeDemo">themeDemo</router-link></li>
     <li><router-link to="/demo/ipcDemo">ipcDemo</router-link></li>
-    <li>
+    <li >
       <el-select
         v-model="windowPath"
         value-key=""
         placeholder="输入路由地址"
         clearable
         filterable
+        style="width: 200px;"
       >
         <el-option
           v-for="path in routerPaths"
@@ -54,9 +55,16 @@ const routerPaths = ref<string[]>([]);
 routerPaths.value = router.getRoutes().map((item) => item.path);
 
 function openWindow() {
-  electronUtils.openWindow(windowPath.value, {
-    message: "向你问个好~~",
+  electronUtils.createWindow({
+    route: windowPath.value,
+    param: JSON.stringify({
+      message: "向你问个好~~",
+    }),
   });
+
+  // electronUtils.openWindow(windowPath.value, {
+  //   message: "向你问个好~~",
+  // });
 }
 
 let lzp = {
@@ -86,7 +94,7 @@ function eventBroadcast() {
 
 // 测试装饰器
 function decoratorTest() {
-  ipcRenderer.invoke("gogo",99);
+  ipcRenderer.invoke("gogo", 99);
 }
 </script>
 

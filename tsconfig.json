@@ -17,7 +17,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@store/*": ["./src/store/modules/*"],
-      "@api/*": ["./src/api/*"]
+      "@api/*": ["./src/api/*"],
+      "@globel/*": ["globel/*"],
     },
     "types": ["vite-plugin-svg-icons/client"]
   },

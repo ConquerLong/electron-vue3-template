@@ -1,4 +1,12 @@
 import { ipcRenderer } from "electron";
+import { CustomChannel } from "@globel/channelEvent";
+/**
+ * 新建一个窗口
+ * @param windowConfig
+ */
+export function createWindow(windowConfig: IWindowConfig) {
+  ipcRenderer.invoke(CustomChannel.window_create, windowConfig);
+}
 
 /**
  * 新建一个窗口
@@ -49,5 +57,6 @@ export default {
   showProcess,
   eventBroadcast,
   windowMove,
-  checkUpdate
+  checkUpdate,
+  createWindow
 };
