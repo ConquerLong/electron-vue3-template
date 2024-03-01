@@ -46,6 +46,10 @@ const router = createRouter({
       path: "/demo/ipcDemo",
       component: () => import("@/components/demo/ipcDemo.vue"),
     },
+    {
+      path: "/demo/windowPositionDemo",
+      component: () => import("@/components/demo/WindowPositionDemo.vue"),
+    },
   ],
 });
 

@@ -14,6 +14,8 @@ declare module '@vue/runtime-core' {
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
@@ -34,5 +36,6 @@ declare module '@vue/runtime-core' {
     ThemeDemo: typeof import('./../src/components/demo/ThemeDemo.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch.vue')['default']
     WeiXinLogin: typeof import('./../src/components/demo/WeiXinLogin.vue')['default']
+    WindowPositionDemo: typeof import('./../src/components/demo/WindowPositionDemo.vue')['default']
   }
 }

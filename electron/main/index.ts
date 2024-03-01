@@ -106,7 +106,8 @@ async function createWindow() {
   }
 
   win = windowUtils.createWindows({
-    route:"/"
+    route:"/",
+    key:'main'
   });
   // win = new BrowserWindow({
   //   title: "Main window",

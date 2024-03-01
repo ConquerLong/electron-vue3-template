@@ -2,6 +2,7 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   ipcMain,
+  screen,
 } from "electron";
 import {
   url,
@@ -48,6 +49,20 @@ export class WindowUtils {
     ipcMain.handle(CustomChannel.window_create, (_, opt: IWindowConfig) => {
       this.createWindows(opt);
     });
+
+    // 窗口位置修改监听
+    ipcMain.handle(
+      CustomChannel.window_position_change,
+      (_, windowPosition: IWindowPosition) => {
+        // 假如传了窗口的key，则获取对应窗口，假如没传，则用发送事件的窗口
+        const windowKey = windowPosition.windowKey;
+        const cureentWin =
+          windowKey && windowKey.length > 0
+            ? this.getWindowByKey(windowKey)
+            : this.getWindowByEvent(_);
+        this.changeWindowPostion(cureentWin, windowPosition);
+      }
+    );
   }
 
   /**
@@ -71,7 +86,7 @@ export class WindowUtils {
     }
 
     // 创建窗口对象
-    const win = new BrowserWindow(
+    const win: BrowserWindow = new BrowserWindow(
       Object.assign({}, defaultWindowConfig, windowConfig)
     );
 
@@ -122,5 +137,118 @@ export class WindowUtils {
       // 引用置空
       win = null;
     });
+  }
+
+  /**
+   * 修改窗口的位置
+   * @param window 窗口对象
+   * @param windowPosition 位置参数对象
+   */
+  changeWindowPostion(window: BrowserWindow, windowPosition: IWindowPosition) {
+    // xy轴值
+    let x = windowPosition.x;
+    let y = windowPosition.y;
+    if (x != null && y != null) {
+      // 偏移量
+      const offsetX = windowPosition.offsetX || 0;
+      const offsetY = windowPosition.offsetY || 0;
+      x = windowPosition.x + offsetX;
+      y = windowPosition.y + offsetY;
+      // 如果是相对于某个窗口的话，加上相对窗口的x、y坐标
+      if (windowPosition.relativeWindowId) {
+        const relativeWin = BrowserWindow.fromId(
+          windowPosition.relativeWindowId
+        );
+        if (relativeWin) {
+          x += relativeWin.getPosition()[0];
+          y += relativeWin.getPosition()[1];
+        }
+      }
+      window.setPosition(x, y);
+    }
+
+    // 如果有定位
+    if (windowPosition.position) {
+      // 偏移量
+      const offsetX = windowPosition.offsetX || 0;
+      const offsetY = windowPosition.offsetY || 0;
+
+      const winBounds = window.getBounds();
+      let relativeBounds = screen.getDisplayMatching(winBounds).bounds;
+      if (windowPosition.relativeWindowId) {
+        const relativeWin = BrowserWindow.fromId(
+          windowPosition.relativeWindowId
+        );
+        if (relativeWin) {
+          relativeBounds = relativeWin.getBounds();
+        }
+      }
+
+      // 计算坐标
+      switch (windowPosition.position) {
+        case "center":
+          window.setPosition(
+            relativeBounds.x +
+              (relativeBounds.width - winBounds.width) / 2 +
+              offsetX,
+            relativeBounds.y +
+              (relativeBounds.height - winBounds.height) / 2 +
+              offsetY
+          );
+          break;
+        case "bottom-left":
+          window.setPosition(
+            relativeBounds.x + offsetX,
+            relativeBounds.y +
+              relativeBounds.height -
+              winBounds.height +
+              offsetY
+          );
+          break;
+        case "bottom-right":
+          window.setPosition(
+            relativeBounds.x + relativeBounds.width - winBounds.width + offsetX,
+            relativeBounds.y +
+              relativeBounds.height -
+              winBounds.height +
+              offsetY
+          );
+          break;
+        case "top-left":
+          window.setPosition(
+            relativeBounds.x + offsetX,
+            relativeBounds.y + offsetY
+          );
+          break;
+        case "top-right":
+          window.setPosition(
+            relativeBounds.x + relativeBounds.width - winBounds.width + offsetX,
+            relativeBounds.y + offsetY
+          );
+          break;
+      }
+    }
+  }
+
+  /**
+   * 通过窗口事件获取发送者的窗口
+   * @param event ipc发送窗口事件
+   */
+  getWindowByEvent(event: Electron.IpcMainInvokeEvent): BrowserWindow {
+    const webContentsId = event.sender.id;
+    for (const currentWin of BrowserWindow.getAllWindows()) {
+      if (currentWin.webContents.id === webContentsId) {
+        return currentWin;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * 通过传入的key获取指定的窗口
+   * @param key 窗口唯一key
+   */
+  getWindowByKey(key: string): BrowserWindow {
+    return BrowserWindow.fromId(this.group.get(key).windowId);
   }
 }

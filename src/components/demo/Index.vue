@@ -11,6 +11,7 @@
     <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
     <li><router-link to="/demo/themeDemo">themeDemo</router-link></li>
     <li><router-link to="/demo/ipcDemo">ipcDemo</router-link></li>
+    <li><router-link to="/demo/windowPositionDemo">窗口位置修改</router-link></li>
     <li >
       <el-select
         v-model="windowPath"

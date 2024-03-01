@@ -1,11 +1,20 @@
 import { ipcRenderer } from "electron";
 import { CustomChannel } from "@globel/channelEvent";
+
 /**
  * 新建一个窗口
  * @param windowConfig
  */
 export function createWindow(windowConfig: IWindowConfig) {
   ipcRenderer.invoke(CustomChannel.window_create, windowConfig);
+}
+
+/**
+ * 修改当前窗口的位置
+ * @param windowPosition 窗口位置修改参数
+ */
+export function changeWindowPosition(windowPosition: IWindowPosition) {
+  ipcRenderer.invoke(CustomChannel.window_position_change, windowPosition);
 }
 
 /**
@@ -48,7 +57,7 @@ export function windowMove(flag: boolean) {
 /**
  * 检查版本更新
  */
-export function checkUpdate(){
+export function checkUpdate() {
   ipcRenderer.invoke("check-update");
 }
 
@@ -58,5 +67,6 @@ export default {
   eventBroadcast,
   windowMove,
   checkUpdate,
-  createWindow
+  createWindow,
+  changeWindowPosition,
 };
