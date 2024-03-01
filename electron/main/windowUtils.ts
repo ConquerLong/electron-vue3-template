@@ -33,6 +33,15 @@ export const defaultWindowConfig: BrowserWindowConstructorOptions &
  * 窗口管理顶级父类 定义一些属性，和公共方法
  */
 export class WindowUtils {
+  group: Map<string, WindowGroup>; // 窗口组 key就是传入的key值，如果没传，则取窗口的id作为key值
+
+  /**
+   * 构造方法，初始化属性
+   */
+  constructor() {
+    this.group = new Map();
+  }
+
   // 事件监听处理
   listen() {
     // 窗口创建监听
@@ -46,10 +55,32 @@ export class WindowUtils {
    * @param windowConfig 窗口创建参数
    */
   createWindows(windowConfig: IWindowConfig): BrowserWindow {
+    // 先通过key判断是否已窗口，有则聚焦
+    let windowKey = windowConfig.key;
+    if (windowKey && windowKey.length > 0) {
+      /// 先从窗口组中取出记录
+      const wg: WindowGroup = this.group.get(windowKey);
+      if (wg) {
+        /// 根据记录中的窗口id获取窗口，假如存在该窗口，则聚焦该窗口
+        const oldWin = BrowserWindow.fromId(wg.windowId);
+        if (oldWin) {
+          oldWin.focus();
+          return oldWin;
+        }
+      }
+    }
+
     // 创建窗口对象
     const win = new BrowserWindow(
       Object.assign({}, defaultWindowConfig, windowConfig)
     );
+
+    // 将窗口的关键信息与key关联，存入窗口组中
+    windowKey = windowKey || win.id.toString();
+    this.group.set(windowKey, {
+      windowId: win.id,
+      webContentsId: win.webContents.id,
+    });
 
     // 根据当前环境加载页面，并传递参数
     const param = windowConfig.param
@@ -64,6 +95,32 @@ export class WindowUtils {
     }
 
     // 绑定通用窗口事件
+    this.bindWindowEvent(win, windowConfig);
+    console.log(this.group);
     return win;
+  }
+
+  /**
+   * 绑定窗口事件
+   * @param win 窗口对象
+   * @param windowConfig 窗口创建参数
+   */
+  bindWindowEvent(win: BrowserWindow, windowConfig: IWindowConfig) {
+    // 窗口关闭监听，此事件触发时，窗口即将关闭，可以拒绝关闭，此时窗口对象还未销毁
+    win.on("close", () => {
+      /// 设置窗口透明
+      win.setOpacity(0);
+      /// 在窗口组中删除
+      const key = windowConfig.key || win.id.toString();
+      this.group.delete(key);
+    });
+
+    // 此事件触发时，窗口已关闭，窗口对象已销毁
+    win.on("closed", () => {
+      // 在窗口对象被关闭时，取消订阅所有与该窗口相关的事件
+      win.removeAllListeners();
+      // 引用置空
+      win = null;
+    });
   }
 }

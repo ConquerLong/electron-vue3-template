@@ -28,6 +28,7 @@
         >
         </el-option>
       </el-select>
+      <el-input v-model="windowKey" placeholder="输入新建窗口的key" style="width: 200px;"></el-input>
       <el-button @click="openWindow">新建窗口</el-button>
     </li>
     <li><el-button @click="eventBroadcast">测试事件广播</el-button></li>
@@ -46,6 +47,7 @@ import { ipcRenderer } from "electron";
 
 const counterStore = useCounterStore();
 const router = useRouter();
+const windowKey = ref("");
 
 console.log("mac地址为：", myUtils.getMacAddress());
 
@@ -57,6 +59,7 @@ routerPaths.value = router.getRoutes().map((item) => item.path);
 function openWindow() {
   electronUtils.createWindow({
     route: windowPath.value,
+    key:windowKey.value,
     param: JSON.stringify({
       message: "向你问个好~~",
     }),
