@@ -11,13 +11,15 @@
     <li><router-link to="/demo/sassDemo">sassDemo</router-link></li>
     <li><router-link to="/demo/themeDemo">themeDemo</router-link></li>
     <li><router-link to="/demo/ipcDemo">ipcDemo</router-link></li>
-    <li>
+    <li><router-link to="/demo/windowPositionDemo">窗口位置修改</router-link></li>
+    <li >
       <el-select
         v-model="windowPath"
         value-key=""
         placeholder="输入路由地址"
         clearable
         filterable
+        style="width: 200px;"
       >
         <el-option
           v-for="path in routerPaths"
@@ -27,6 +29,7 @@
         >
         </el-option>
       </el-select>
+      <el-input v-model="windowKey" placeholder="输入新建窗口的key" style="width: 200px;"></el-input>
       <el-button @click="openWindow">新建窗口</el-button>
     </li>
     <li><el-button @click="eventBroadcast">测试事件广播</el-button></li>
@@ -45,6 +48,7 @@ import { ipcRenderer } from "electron";
 
 const counterStore = useCounterStore();
 const router = useRouter();
+const windowKey = ref("");
 
 console.log("mac地址为：", myUtils.getMacAddress());
 
@@ -54,9 +58,17 @@ const routerPaths = ref<string[]>([]);
 routerPaths.value = router.getRoutes().map((item) => item.path);
 
 function openWindow() {
-  electronUtils.openWindow(windowPath.value, {
-    message: "向你问个好~~",
+  electronUtils.createWindow({
+    route: windowPath.value,
+    key:windowKey.value,
+    param: JSON.stringify({
+      message: "向你问个好~~",
+    }),
   });
+
+  // electronUtils.openWindow(windowPath.value, {
+  //   message: "向你问个好~~",
+  // });
 }
 
 let lzp = {
@@ -86,7 +98,7 @@ function eventBroadcast() {
 
 // 测试装饰器
 function decoratorTest() {
-  ipcRenderer.invoke("gogo",99);
+  ipcRenderer.invoke("gogo", 99);
 }
 </script>
 

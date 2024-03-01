@@ -58,7 +58,7 @@ import cacheUtils from "@/utils/cacheUtils";
 
 const counterStore = useCounterStore();
 const timerFlag = ref(false);
-let timer: NodeJS.Timer | undefined;
+let timer: NodeJS.Timeout | string | number | undefined;
 // 开始定时器
 function triggerInterval() {
   timerFlag.value = !timerFlag.value;

@@ -11,10 +11,18 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     DragTool: typeof import('./../src/components/DragTool.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElDropdown: typeof import('element-plus/es')['ElDropdown']
+    ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
+    ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     GoBack: typeof import('./../src/components/demo/GoBack.vue')['default']
     HelloWorld: typeof import('./../src/components/HelloWorld.vue')['default']
+    IEpEdit: typeof import('~icons/ep/edit')['default']
     Index: typeof import('./../src/components/demo/Index.vue')['default']
     IpcDemo: typeof import('./../src/components/demo/ipcDemo.vue')['default']
     Language: typeof import('./../src/components/Language.vue')['default']
@@ -28,5 +36,6 @@ declare module '@vue/runtime-core' {
     ThemeDemo: typeof import('./../src/components/demo/ThemeDemo.vue')['default']
     ThemeSwitch: typeof import('./../src/components/ThemeSwitch.vue')['default']
     WeiXinLogin: typeof import('./../src/components/demo/WeiXinLogin.vue')['default']
+    WindowPositionDemo: typeof import('./../src/components/demo/WindowPositionDemo.vue')['default']
   }
 }
