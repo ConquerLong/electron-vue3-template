@@ -1,9 +1,12 @@
-# 说明
+[![star](https://gitee.com/longzipeng/electron-vue3-template/badge/star.svg?theme=dark)](https://gitee.com/longzipeng/electron-vue3-template/stargazers) 
+# 介绍
++ 本项目基于开源的electron构建脚手架：[electron-vite-vue](https://github.com/electron-vite/electron-vite-vue)搭建
++ 博客讲解：[electron+vue3全家桶专栏](https://blog.csdn.net/qq_42365534/category_12271233.html)  
++ 视频讲解：[electron+vue3全家桶视频讲解合集](https://space.bilibili.com/99214150/channel/collectiondetail?sid=1247775)
 
-本工程是在工作学习中对 electron+vue3 体系的学习与总结，所有使用案例均放在 [compoents/demo 目录](src\components\demo)下
 
-博客讲解：[electron+vue3全家桶专栏](https://blog.csdn.net/qq_42365534/category_12271233.html)  
-视频讲解：[electron+vue3全家桶视频讲解合集](https://space.bilibili.com/99214150/channel/collectiondetail?sid=1247775)
+该工程已集成
+所有使用案例均放在 [compoents/demo 目录](src\components\demo)下
 
 # 技术栈
 
@@ -12,15 +15,19 @@
 | electron     | 写前端的方式开发桌面端    |  [官网](https://www.electronjs.org/zh/docs/latest/api/app)                                                                   |
 | vite         | 新一代前端构建工具        | [官网](https://cn.vitejs.dev/guide/)                                |
 | vue3         | 渐进式前端框架            | [官网](https://cn.vuejs.org/guide/components/props.html)            |
-| typescript   | js 的超集，更好的代码提示 | [菜鸟教程](https://www.runoob.com/typescript/ts-object.html)        |
+| typescript   | js 的超集，强类型语言 | [菜鸟教程](https://www.runoob.com/typescript/ts-object.html)        |
 | element-plus | 前端 ui 框架              | [文档地址](https://element-plus.gitee.io/zh-CN/component/icon.html) |
 | axios        | 请求发送                  | [官网](https://axios-http.com/zh/docs/intro)                        |
 | pinia        | 全局状态管理              | [官网](https://pinia.web3doc.top/introduction.html)                 |
+| Vue Router        | 路由管理              | [官网](https://router.vuejs.org/zh/guide/)                 |
+| vue-i18n       | 国际化              | [官网](https://vue-i18n.intlify.dev/guide/)                 |
+| sass     | Sass 是 CSS 的一种预编译语言，提供变量、嵌套规则等              | [官网](https://www.sasscss.com/guide)                 |
 | mockjs       | 模拟数据                  | [官网](https://blog.csdn.net/qq_42365534/article/details/130059576) |
 
 # 开始
+1. 该项目开发使用的node环境为 16.19.0，建议node版本在其之上
 
-1. 配置 npm 镜像
+2. 配置 npm 镜像
 
 ```cmd
 # 指定 npm 国内镜像
@@ -36,13 +43,13 @@ registry=https://registry.npmmirror.com/
 ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
 ```
 
-2. 安装依赖
+3. 安装依赖
 
 ```cmd
 npm i
 ```
 
-3. 快速删除 node_modules
+4. 快速删除 node_modules
 
 ```cmd
 # 全局安装依赖
@@ -82,33 +89,14 @@ rimraf node_modules
   - 一个 ts 版语法提示
 
 # 推荐插件
-
-- Element Plus Snippets [大量 element 代码块]
-- Vue VSCode Snippets [大量 vue 代码块]
 - Markdown All in One [预览 md 文件]
 - Markdown Preview GitHub Styling [github 风格的 md 预览]
 
-# 常用操作
+# 已集成实现功能
+## i18n多语言
++ [实现模块位置](src/locales)
++ [对应组件](src/components/Language.vue)
 
-## 速查手册
-
-[vite 官方文档](https://cn.vitejs.dev/guide/)  
-[vue3 官方文档](https://cn.vuejs.org/guide/components/props.html)  
-[element-plus](https://element-plus.org/zh-CN/component/button.html)  
-[vue-router](https://router.vuejs.org/zh/guide/)  
-[sass 官方文档](https://www.sass.hk/docs/)  
-[ts 菜鸟教程](https://www.runoob.com/typescript/ts-object.html)  
-[electron 官方文档](https://www.electronjs.org/zh/docs/latest/api/app)  
-[element-plus](https://element-plus.org/zh-CN/component/button.html)  
-[pinia 官方文档](https://pinia.web3doc.top/introduction.html)
+![多语言](资料/readMeImgs/localeschange.gif)
 
 ## 使用 element 的图标
-
-所有图标直接看官网：[https://element-plus.org/zh-CN/component/icon.html#%E5%9B%BE%E6%A0%87%E9%9B%86%E5%90%88](https://element-plus.org/zh-CN/component/icon.html#%E5%9B%BE%E6%A0%87%E9%9B%86%E5%90%88)  
-调整为 i-ep-xx 即可
-
-```html
-<el-icon size="25" color="red">
-  <i-ep-edit />
-</el-icon>
-```

@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+    <GoBack></GoBack>
     <h1 class="header">sass基础使用演示</h1>
     <div class="body"></div>
   </div>

@@ -1,6 +1,7 @@
 import { createI18n } from "vue-i18n";
 import en from "./packages/en";
 import zhCn from "./packages/zh-cn";
+import jp from "./packages/jp";
 import cacheUtils from "@/utils/cacheUtils";
 import { useAppStore } from "@/store/modules/appStore";
 import { ipcRenderer } from "electron";
@@ -14,6 +15,7 @@ const i18n = createI18n({
   messages: {
     en,
     zhCn,
+    jp
   },
 });
 

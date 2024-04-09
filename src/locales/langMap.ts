@@ -3,6 +3,7 @@ export default {
   languageMap: new Map([
     ["zhCn", "中文"],
     ["en", "English"],
+    ["jp", "日本語."],
   ]),
 
   /**所有属性路径描述 */
