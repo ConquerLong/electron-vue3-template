@@ -93,10 +93,40 @@ rimraf node_modules
 - Markdown Preview GitHub Styling [github 风格的 md 预览]
 
 # 已集成实现功能
-## i18n多语言
-+ [实现模块位置](src/locales)
-+ [对应组件](src/components/Language.vue)
+## i18n多语言+多窗口语言同步
++ [核心模块](src/locales)
++ [对应组件Language](src/components/Language.vue)
 
-![多语言](资料/readMeImgs/localeschange.gif)
+![多语言](资料/readMeImgs/duoyuyantongbu.gif)
 
-## 使用 element 的图标
+## mock模拟数据
+[demo位置](src/components/demo/MockDemo.vue)
+
+![模拟数据](资料/readMeImgs/mockdemogif1.gif)
+
+## 多主题切换+窗口主题同步
++ [核心模块](src/utils/themeUtils.ts)
++ [对应组件ThemeSwitch](src/components/ThemeSwitch.vue)
+
+![多主题切换](资料/readMeImgs/themeswitch1.gif)
+
+## pinia多窗口状态同步
++ 主动同步更新(推荐)
++ [核心插件实现](src/store/plugins/shareStoreByActionPlugin.ts)
+
+![pinia多窗口状态主动同步更新](资料/readMeImgs/piniaSync.gif)
+
++ 被动同步更新
++ [核心插件实现](src/store/plugins/shareStorePlugin.ts)
+
+![pinia多窗口状态被动同步更新](资料/readMeImgs/piniaBingFaTest.gif)
+
+## 自定义窗口移动
+[对应组件DragTool](src/components/DragTool.vue)
+
+![自定义窗口移动](资料/readMeImgs/dragBugFix.gif)
+
+## 窗口事件广播
+
+![窗口事件广播](资料/readMeImgs/eventbroadcast.gif)
+
